@@ -12,11 +12,11 @@ pwm0 = PWM(0, 50, 7.5, enable=True)         # (channel, freq Hz, duty %, enable)
 
 # Optional: helper for angles (0–180° ≈ 5–10% duty)
 def write_angle(deg):
-    deg = max(0, min(180, deg))
     pwm0.duty(5 + (deg/180)*5)
-
-# Sweep
-write_angle(0);   time.sleep(1)
-write_angle(90);  time.sleep(1)
-write_angle(180); time.sleep(1)
-write_angle(90);  time.sleep(1)
+    
+# Sweep 150 middle +- 100
+write_angle(150);   time.sleep(1)
+write_angle(50); time.sleep(1)
+write_angle(150);   time.sleep(1)
+write_angle(250);  time.sleep(1)
+write_angle(150);   time.sleep(1)
