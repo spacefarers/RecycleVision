@@ -158,7 +158,7 @@ print("Starting camera inference loop. Ctrl+C to stop.")
 last_txt = ""
 last_conf = -1.0
 last_draw_ms = 0
-                                                                                                                                                                                                                                                                                                                                                                        `0    +
+
 try:
     while True:
         t0 = time.ticks_ms()

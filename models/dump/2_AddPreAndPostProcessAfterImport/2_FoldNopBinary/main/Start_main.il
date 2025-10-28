@@ -231,15 +231,23 @@
   
   %219 = Stack(%218, const(i32 : 0)): // i64[2]
   %220 = ReduceWindow2D(ReduceOp.Mean, %211, const(f32 : 0), %219, const(i64[2] : {1L,1L}), const(i64[2,2] : {{0L,0L},{0L,0L}}), const(i64[2] : {1L,1L}), const(bool : False), const(bool : False)): // f32[?,?,?,?]
-  %221 = Flatten(%220, const(i64 : 1)): // f32[?,?]
-  %222 = MatMul(%221, const(f32[576,512])): // f32[?,512]
-  %223 = Binary(BinaryOp.Add, %222, const(f32[512])): // f32[?,?]
-  %224 = BatchNormalization(%223, const(f32[512]), const(f32[512]), const(f32[512]), const(f32[512]), const(f32 : 1E-05), const(f32 : 0.9)): // f32[?,?]
-  %225 = Relu(%224): // f32[?,?]
-  %226 = MatMul(%225, const(f32[512,256])): // f32[?,256]
-  %227 = Binary(BinaryOp.Add, %226, const(f32[256])): // f32[?,?]
-  %228 = BatchNormalization(%227, const(f32[256]), const(f32[256]), const(f32[256]), const(f32[256]), const(f32 : 1E-05), const(f32 : 0.9)): // f32[?,?]
-  %229 = Relu(%228): // f32[?,?]
-  %230 = MatMul(%229, const(f32[256,6])): // f32[?,6]
-  %231 = Binary(BinaryOp.Add, %230, const(f32[6] : {0.0014595619f,0.001424954f,0.012488966f,0.016606119f,-0.0116832135f,-0.021904912f})): // f32[?,?]
+  %221 = ShapeOf(%220): // i64[4]
+  %222 = GetItem(%221, const(i32 : 0)): // i64
+  %223 = Reduce(ReduceOp.Prod, %221, const(i64[1] : {0L}), const(i64 : 1), const(bool : False)): // i64
+  %224 = Binary(BinaryOp.Mul, const(i64 : 1), %222): // i64
+  %225 = Binary(BinaryOp.Div, %223, %224): // i64
+  %226 = (%222, %225): // (i64, i64)
+  
+  %227 = Stack(%226, const(i32 : 0)): // i64[2]
+  %228 = Reshape(%220, %227): // f32[?,?]
+  %229 = MatMul(%228, const(f32[576,512])): // f32[?,512]
+  %230 = Binary(BinaryOp.Add, %229, const(f32[512])): // f32[?,?]
+  %231 = BatchNormalization(%230, const(f32[512]), const(f32[512]), const(f32[512]), const(f32[512]), const(f32 : 1E-05), const(f32 : 0.9)): // f32[?,?]
+  %232 = Relu(%231): // f32[?,?]
+  %233 = MatMul(%232, const(f32[512,256])): // f32[?,256]
+  %234 = Binary(BinaryOp.Add, %233, const(f32[256])): // f32[?,?]
+  %235 = BatchNormalization(%234, const(f32[256]), const(f32[256]), const(f32[256]), const(f32[256]), const(f32 : 1E-05), const(f32 : 0.9)): // f32[?,?]
+  %236 = Relu(%235): // f32[?,?]
+  %237 = MatMul(%236, const(f32[256,6])): // f32[?,6]
+  %238 = Binary(BinaryOp.Add, %237, const(f32[6] : {0.0014595619f,0.001424954f,0.012488966f,0.016606119f,-0.0116832135f,-0.021904912f})): // f32[?,?]
 }
