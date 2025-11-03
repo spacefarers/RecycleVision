@@ -1,0 +1,20 @@
+num_classes: 3
+pretrain:
+  enabled: true
+  data_root: "data/garbage-classification"
+  epochs: 3
+  learning_rate: 0.001
+  checkpoint_dir: "checkpoints/pretrain"
+finetune:
+  enabled: false
+optimizer:
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  label_smoothing: 0.1
+training:
+  mixed_precision: false
+  checkpoint_dir: "checkpoints"
+  device: "mps"
+  early_stopping_patience: 10
+  eval_interval_epochs: 1
+  mixup_alpha: 0.4

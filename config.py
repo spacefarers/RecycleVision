@@ -63,11 +63,58 @@ class TrainConfig:
 
 
 @dataclass(slots=True)
+class PretrainConfig:
+    """Configuration for pre-training stage on public datasets."""
+    
+    enabled: bool = True
+    data_root: Path = Path("data/garbage-classification")
+    epochs: int = 50
+    learning_rate: float = 1e-3
+    checkpoint_dir: Path = Path("checkpoints/pretrain")
+    
+    def __post_init__(self) -> None:
+        self.data_root = _expand(self.data_root)
+        self.checkpoint_dir = _expand(self.checkpoint_dir)
+
+
+@dataclass(slots=True)
+class FinetuneConfig:
+    """Configuration for fine-tuning stage on collected datasets."""
+    
+    enabled: bool = True
+    data_root: Path = Path("data/sorted_2_class")
+    epochs: int = 30
+    learning_rate: float = 5e-4
+    checkpoint_dir: Path = Path("checkpoints/finetune")
+    pretrained_weights: Optional[Path] = None
+    freeze_backbone: bool = False
+    freeze_epochs: int = 5
+    
+    def __post_init__(self) -> None:
+        self.data_root = _expand(self.data_root)
+        self.checkpoint_dir = _expand(self.checkpoint_dir)
+        if self.pretrained_weights is not None:
+            self.pretrained_weights = _expand(self.pretrained_weights)
+
+
+@dataclass(slots=True)
 class ExperimentConfig:
     """Full experiment configuration bound together."""
 
     num_classes: int
     data: DataConfig
+    optimizer: OptimConfig = field(default_factory=OptimConfig)
+    training: TrainConfig = field(default_factory=TrainConfig)
+
+
+@dataclass(slots=True)
+class TwoStageConfig:
+    """Configuration for two-stage training (pretrain + finetune)."""
+
+    num_classes: int = 3
+    batch_size: int = 16
+    pretrain: PretrainConfig = field(default_factory=PretrainConfig)
+    finetune: FinetuneConfig = field(default_factory=FinetuneConfig)
     optimizer: OptimConfig = field(default_factory=OptimConfig)
     training: TrainConfig = field(default_factory=TrainConfig)
 
@@ -78,3 +125,8 @@ def default_config(data_root: str | Path, num_classes: int) -> ExperimentConfig:
         num_classes=num_classes,
         data=DataConfig(root=data_root),
     )
+
+
+def default_twostage_config() -> TwoStageConfig:
+    """Convenience factory for two-stage training configuration."""
+    return TwoStageConfig(num_classes=3)

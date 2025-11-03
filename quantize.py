@@ -93,28 +93,50 @@ def export_to_onnx(
 
 def generate_calibration_data(
     num_samples: int,
-    input_shape: tuple[int, ...]
+    input_shape: tuple[int, ...],
+    data_loader: torch.utils.data.DataLoader | None = None
 ) -> list[list[np.ndarray]]:
-    """Generate random calibration data for PTQ quantization.
+    """Generate calibration data for PTQ quantization.
 
-    For real deployment, replace this with actual representative data samples.
+    Uses real data from the provided DataLoader if available, otherwise generates random data.
 
     Args:
         num_samples: Number of calibration samples
         input_shape: Input tensor shape (batch, channels, height, width)
+        data_loader: Optional DataLoader to use for real calibration data
 
     Returns:
         List of calibration data in the format expected by nncase
     """
     print(f"Generating {num_samples} calibration samples...")
     calib_data = []
-    for i in range(num_samples):
-        # Generate random data in the range [0, 255] as uint8
-        sample = np.random.randint(0, 256, size=input_shape, dtype=np.uint8)
-        calib_data.append(sample)
+
+    if data_loader is not None:
+        print("Using real validation data for calibration...")
+        for batch_idx, (images, _) in enumerate(data_loader):
+            if len(calib_data) >= num_samples:
+                break
+            # Convert to uint8 range [0, 255]
+            # Images are normalized in [-1, 1] range, convert back
+            images = (images * 255).byte().numpy()
+            for img in images:
+                if len(calib_data) >= num_samples:
+                    break
+                # Ensure shape matches input_shape
+                if img.shape != input_shape[1:]:
+                    # Handle potential shape mismatches
+                    if len(img.shape) == 3:
+                        img = img.reshape(input_shape[1:]) if img.size == np.prod(input_shape[1:]) else img
+                calib_data.append(img)
+    else:
+        print("Using random calibration data (real data recommended for better accuracy)...")
+        for i in range(num_samples):
+            # Generate random data in the range [0, 255] as uint8
+            sample = np.random.randint(0, 256, size=input_shape[1:], dtype=np.uint8)
+            calib_data.append(sample)
 
     # nncase expects format: [[sample1, sample2, ...]]
-    return [calib_data]
+    return [calib_data[:num_samples]]
 
 
 def quantize_model(
@@ -207,12 +229,12 @@ def quantize_model(
 def main() -> None:
     """Main quantization pipeline."""
     # Configuration
-    checkpoint_path = Path("checkpoints/final.pt")
+    checkpoint_path = Path("checkpoints/finetune/final.pt")
     onnx_path = Path("models/recyclevision.onnx")
     kmodel_path = Path("models/recyclevision.kmodel")
     dump_dir = Path("models/dump")
 
-    num_classes = 6  # cardboard, glass, metal, paper, plastic, trash
+    num_classes = 3  # recyclable, trash, empty
     input_shape = (1, 3, 224, 224)  # NCHW format
 
     # Create output directories
@@ -222,7 +244,14 @@ def main() -> None:
     # Load trained model
     print(f"Loading model from {checkpoint_path}...")
     model = create_model(num_classes=num_classes, pretrained=False)
-    state_dict = torch.load(checkpoint_path, map_location="cpu")
+
+    # Load checkpoint - handle both direct state_dict and checkpoint dict formats
+    checkpoint = torch.load(checkpoint_path, map_location="cpu")
+    if isinstance(checkpoint, dict) and "model_state" in checkpoint:
+        state_dict = checkpoint["model_state"]
+    else:
+        state_dict = checkpoint
+
     model.load_state_dict(state_dict)
     model.eval()
     print("Model loaded successfully")

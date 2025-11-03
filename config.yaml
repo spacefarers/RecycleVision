@@ -1,0 +1,34 @@
+num_classes: 3
+batch_size: 4
+
+pretrain:
+  enabled: false
+  data_root: "data/garbage-classification"
+  epochs: 10
+  learning_rate: 0.0005
+  checkpoint_dir: "checkpoints/pretrain"
+
+finetune:
+  enabled: true
+  data_root: "data/sorted_2_class"
+  epochs: 50
+  learning_rate: 0.0005
+  checkpoint_dir: "checkpoints/finetune"
+  pretrained_weights: null
+  freeze_backbone: false
+  freeze_epochs: 0
+
+optimizer:
+  learning_rate: 0.0005
+
+training:
+  epochs: 30
+  mixed_precision: false
+  log_interval: 10
+  checkpoint_dir: "checkpoints"
+  device: "mps"
+  gradient_clip_norm: 1.0
+  early_stopping_patience: 15
+  eval_interval_epochs: 1
+  mixup_alpha: 0
+  log_timing: false

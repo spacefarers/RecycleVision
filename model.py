@@ -12,11 +12,9 @@ def create_model(num_classes: int, pretrained: bool = True, drop_rate: float = 0
 
     model.classifier = nn.Sequential(
         nn.Linear(in_features, 512),
-        nn.BatchNorm1d(512),
         nn.ReLU(inplace=True),
         nn.Dropout(p=drop_rate),
         nn.Linear(512, 256),
-        nn.BatchNorm1d(256),
         nn.ReLU(inplace=True),
         nn.Dropout(p=drop_rate),
         nn.Linear(256, num_classes),

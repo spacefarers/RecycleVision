@@ -22,11 +22,13 @@ def _build_transforms(config: DataConfig) -> Tuple[transforms.Compose, transform
     if config.augment:
         train_transforms.extend(
             [
-                transforms.RandomResizedCrop(config.image_size, scale=(0.8, 1.0)),
+                transforms.RandomResizedCrop(config.image_size, scale=(0.7, 1.0)),
                 transforms.RandomHorizontalFlip(p=0.5),
-                transforms.RandomRotation(degrees=15),
-                transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
-                transforms.RandomAffine(degrees=0, translate=(0.1, 0.1)),
+                transforms.RandomVerticalFlip(p=0.3),
+                transforms.RandomRotation(degrees=20),
+                transforms.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.3, hue=0.15),
+                transforms.RandomAffine(degrees=0, translate=(0.15, 0.15), scale=(0.9, 1.1)),
+                transforms.GaussianBlur(kernel_size=3, sigma=(0.1, 0.3)),
             ]
         )
     else:
@@ -34,7 +36,7 @@ def _build_transforms(config: DataConfig) -> Tuple[transforms.Compose, transform
     train_transforms.extend([
         transforms.ToTensor(),
         normalize,
-        transforms.RandomErasing(p=0.25, scale=(0.02, 0.2), ratio=(0.3, 3.3)),
+        transforms.RandomErasing(p=0.3, scale=(0.02, 0.3), ratio=(0.3, 3.3)),
     ])
 
     val_transforms = transforms.Compose(
