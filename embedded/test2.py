@@ -11,15 +11,31 @@ import gc, time
 from media.sensor import *
 from media.media import *
 from media.display import *
+from machine import FPIOA, PWM
+import time
+
+# 1) Route PWM0 to IO60 explicitly (IOMUX)
+fpioa = FPIOA()
+fpioa.set_function(60, fpioa.PWM0)   # IO60 ← PWM0
+
+# 2) Start PWM channel 0 at 50 Hz and center duty for servo
+#    NOTE: constructor requires ALL 4 positional args on this firmware.
+pwm0 = PWM(0, 50, 7.5, enable=True)         # (channel, freq Hz, duty %, enable)
+
+
+# Optional: helper for angles (0–180° ≈ 5–10% duty)
+def write_angle(deg):
+    pwm0.duty(5 + (deg/180)*5)
+
 
 # ---------- CONFIG ----------
-MODEL_PATH      = "/sdcard/models/recyclevision.kmodel"
+MODEL_PATH      = "/sdcard/recyclevision.kmodel"
 MODEL_IN_NCHW   = (1, 3, 320, 320)
 CAM_ID          = 0
 FPS             = 30
 W, H            = 640, 480          # bump later if stable
 MEAN_SUB        = [104, 117, 123]   # use [0,0,0] if no mean
-LABELS = ["cardboard","glass","metal","paper","plastic","trash"]
+LABELS = ["recyclable","trash","empty"]
 
 # Overlay behavior
 OVERLAY_EVERY_MS = 500               # force refresh at least every 500 ms
@@ -158,6 +174,8 @@ print("Starting camera inference loop. Ctrl+C to stop.")
 last_txt = ""
 last_conf = -1.0
 last_draw_ms = 0
+count_success = 0
+write_angle(150);
 
 try:
     while True:
@@ -218,6 +236,17 @@ try:
 
         # Console feedback every frame
         print("pred:", top, f"({klass})", "conf:{:.3f}".format(conf))
+        if top == 0:
+            count_success += 1
+            if count_success == 7:
+                count_success = 0
+                # Sweep 150 middle +- 100
+                write_angle(150);   time.sleep(1)
+                write_angle(50); time.sleep(1)
+                write_angle(150);   time.sleep(1)
+        else:
+            count_success = 0
+
 
         # FPS
         dt = time.ticks_ms() - t0

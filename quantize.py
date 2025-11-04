@@ -1,289 +1,290 @@
-"""Quantize RecycleVision model for K230 deployment using nncase."""
+"""Convert PyTorch RecycleVision model to kmodel format."""
 from __future__ import annotations
 
-import os
+import argparse
 from pathlib import Path
 
 import numpy as np
 import onnx
+import onnxsim
 import torch
+import torch.nn as nn
+from torchvision.models import mobilenet_v3_small
 
-import nncase
-from model import create_model
+
+def create_model(num_classes: int, pretrained: bool = True, drop_rate: float = 0.3) -> nn.Module:
+    """Create a MobileNetV3-Small classification model with enhanced classifier."""
+    model = mobilenet_v3_small(weights="IMAGENET1K_V1" if pretrained else None)
+    in_features = model.classifier[0].in_features
+
+    model.classifier = nn.Sequential(
+        nn.Linear(in_features, 512),
+        nn.ReLU(inplace=True),
+        nn.Dropout(p=drop_rate),
+        nn.Linear(512, 256),
+        nn.ReLU(inplace=True),
+        nn.Dropout(p=drop_rate),
+        nn.Linear(256, num_classes),
+    )
+
+    # Initialize classifier layers with proper weights
+    for m in model.classifier.modules():
+        if isinstance(m, nn.Linear):
+            nn.init.xavier_uniform_(m.weight)
+            nn.init.constant_(m.bias, 0)
+
+    return model
 
 
-def replace_flatten_with_reshape(onnx_path: str | Path) -> None:
-    """Replace Flatten nodes with Reshape nodes for K230 compatibility.
+def generate_calibration_data(input_shape: tuple, num_samples: int) -> list[list[np.ndarray]]:
+    """Generate random calibration data for PTQ quantization.
 
-    Args:
-        onnx_path: Path to the ONNX model to modify
+    The calibration data must be float32 to match the ONNX model's expected input type.
+    Data is normalized to [0, 1] range as expected by ImageNet-pretrained models.
     """
-    model = onnx.load(onnx_path)
-    graph = model.graph
+    calibration_data = []
+    for _ in range(num_samples):
+        # Generate random image data as float32 in [0, 1] range
+        # This matches the normalized input expected by the model
+        sample = np.random.uniform(0, 1, size=input_shape).astype(np.float32)
+        calibration_data.append([sample])
 
-    # Find Flatten nodes and replace with Reshape in-place
-    modified = False
-    for i, node in enumerate(graph.node):
-        if node.op_type == "Flatten":
-            print(f"Replacing Flatten node: {node.name}")
-            modified = True
-
-            # Add constant for reshape target shape [-1, features]
-            # Flatten with axis=1 flattens to (batch, -1)
-            shape_name = node.name + "_shape"
-            shape_tensor = onnx.helper.make_tensor(
-                shape_name,
-                onnx.TensorProto.INT64,
-                [2],
-                [0, -1]  # 0 means keep batch size, -1 means infer
-            )
-            graph.initializer.append(shape_tensor)
-
-            # Create a Reshape node instead
-            reshape_node = onnx.helper.make_node(
-                "Reshape",
-                inputs=[node.input[0], shape_name],
-                outputs=node.output,
-                name=node.name + "_reshape"
-            )
-
-            # Replace the node in place
-            graph.node[i].CopyFrom(reshape_node)
-
-    if modified:
-        # Save modified model
-        onnx.save(model, onnx_path)
-        print(f"Modified ONNX model saved to {onnx_path}")
-    else:
-        print("No Flatten nodes found")
+    return calibration_data
 
 
-def export_to_onnx(
-    model: torch.nn.Module,
-    input_shape: tuple[int, ...],
-    onnx_path: str | Path,
-) -> None:
-    """Export PyTorch model to ONNX format.
+def export_to_onnx(model: nn.Module, input_shape: tuple, output_path: str) -> None:
+    """Export PyTorch model to ONNX format."""
+    print(f"Exporting to ONNX: {output_path}")
 
-    Args:
-        model: PyTorch model to export
-        input_shape: Input tensor shape (batch, channels, height, width)
-        onnx_path: Path to save the ONNX model
-    """
+    # Set model to evaluation mode
     model.eval()
-    example_inputs = (torch.randn(*input_shape),)
 
-    print(f"Exporting model to ONNX with input shape {input_shape}...")
+    # Create dummy input
+    dummy_input = torch.randn(1, *input_shape[1:])
+
+    # Export to ONNX
     torch.onnx.export(
         model,
-        example_inputs,
-        onnx_path,
-        export_params=True,
-        opset_version=11,
-        do_constant_folding=True,
+        dummy_input,
+        output_path,
+        opset_version=11,  # nncase supports opset 11
         input_names=["input"],
         output_names=["output"],
-        dynamic_axes={
-            "input": {0: "batch_size"},
-            "output": {0: "batch_size"},
-        },
+        dynamic_axes=None,  # Fixed input shape
     )
-    print(f"ONNX model saved to {onnx_path}")
+    print("✓ ONNX export complete")
 
 
-def generate_calibration_data(
-    num_samples: int,
-    input_shape: tuple[int, ...],
-    data_loader: torch.utils.data.DataLoader | None = None
-) -> list[list[np.ndarray]]:
-    """Generate calibration data for PTQ quantization.
+def simplify_onnx(input_path: str, output_path: str) -> None:
+    """Simplify ONNX model using onnxsim."""
+    print(f"Simplifying ONNX model...")
 
-    Uses real data from the provided DataLoader if available, otherwise generates random data.
+    onnx_model = onnx.load(input_path)
+    onnx_model, check = onnxsim.simplify(onnx_model)
 
-    Args:
-        num_samples: Number of calibration samples
-        input_shape: Input tensor shape (batch, channels, height, width)
-        data_loader: Optional DataLoader to use for real calibration data
+    if not check:
+        print("⚠ Warning: Simplified model may not be valid")
 
-    Returns:
-        List of calibration data in the format expected by nncase
-    """
-    print(f"Generating {num_samples} calibration samples...")
-    calib_data = []
+    # Remove unsupported attributes from Reshape operations
+    print("Removing unsupported Reshape attributes...")
+    for node in onnx_model.graph.node:
+        if node.op_type == "Reshape":
+            # Remove allowzero attribute if it exists
+            attrs_to_remove = []
+            for i, attr in enumerate(node.attribute):
+                if attr.name == "allowzero":
+                    attrs_to_remove.append(i)
 
-    if data_loader is not None:
-        print("Using real validation data for calibration...")
-        for batch_idx, (images, _) in enumerate(data_loader):
-            if len(calib_data) >= num_samples:
-                break
-            # Convert to uint8 range [0, 255]
-            # Images are normalized in [-1, 1] range, convert back
-            images = (images * 255).byte().numpy()
-            for img in images:
-                if len(calib_data) >= num_samples:
-                    break
-                # Ensure shape matches input_shape
-                if img.shape != input_shape[1:]:
-                    # Handle potential shape mismatches
-                    if len(img.shape) == 3:
-                        img = img.reshape(input_shape[1:]) if img.size == np.prod(input_shape[1:]) else img
-                calib_data.append(img)
-    else:
-        print("Using random calibration data (real data recommended for better accuracy)...")
-        for i in range(num_samples):
-            # Generate random data in the range [0, 255] as uint8
-            sample = np.random.randint(0, 256, size=input_shape[1:], dtype=np.uint8)
-            calib_data.append(sample)
+            # Remove in reverse order to maintain indices
+            for i in reversed(attrs_to_remove):
+                del node.attribute[i]
 
-    # nncase expects format: [[sample1, sample2, ...]]
-    return [calib_data[:num_samples]]
+    onnx.save(onnx_model, output_path)
+    print("✓ ONNX simplification complete")
 
 
-def quantize_model(
-    onnx_path: str | Path,
-    kmodel_path: str | Path,
-    dump_dir: str | Path,
-    input_shape: tuple[int, ...],
-    num_calib_samples: int = 10,
+def convert_to_kmodel(
+    onnx_path: str,
+    output_path: str,
+    input_shape: tuple,
+    target: str = "k230",
+    num_calibration_samples: int = 10,
 ) -> None:
-    """Quantize ONNX model to kmodel using nncase for K230 deployment.
+    """Convert ONNX model to kmodel using nncase."""
+    print(f"Converting to kmodel for target: {target}")
 
-    Args:
-        onnx_path: Path to the ONNX model
-        kmodel_path: Path to save the quantized kmodel
-        dump_dir: Directory to dump intermediate compilation artifacts
-        input_shape: Input tensor shape (batch, channels, height, width)
-        num_calib_samples: Number of calibration samples for PTQ
-    """
-    print(f"\nQuantizing model with nncase...")
+    try:
+        import nncase
+    except ImportError:
+        raise ImportError(
+            "nncase is not installed. Install with: pip install nncase"
+        )
 
-    # Setup compilation options
+    # Configure compilation options
     compile_options = nncase.CompileOptions()
-    compile_options.target = "k230"
-    compile_options.dump_ir = True
-    compile_options.dump_asm = True
-    compile_options.dump_dir = str(dump_dir)
-
-    # Configure preprocessing
-    compile_options.preprocess = True
-    compile_options.input_type = "uint8"
+    compile_options.target = target
+    compile_options.input_type = "uint8"  # Use uint8 for image input
     compile_options.input_shape = list(input_shape)
     compile_options.input_layout = "NCHW"
-    compile_options.input_range = [0, 1]
-    compile_options.swapRB = False
+    compile_options.dump_ir = True
+    compile_options.dump_asm = True
+    compile_options.dump_dir = "output"
 
-    # ImageNet normalization (same as training)
-    compile_options.mean = [0.485, 0.456, 0.406]
-    compile_options.std = [0.229, 0.224, 0.225]
-    compile_options.output_layout = "NCHW"
+    # Create compiler
+    compiler = nncase.Compiler(compile_options)
 
-    print(f"Compile options:")
-    print(f"  Target: {compile_options.target}")
-    print(f"  Input shape: {compile_options.input_shape}")
-    print(f"  Input type: {compile_options.input_type}")
-    print(f"  Preprocess: {compile_options.preprocess}")
-
-    # Setup PTQ options
-    ptq_options = nncase.PTQTensorOptions()
-    ptq_options.calibrate_method = "Kld"
-    ptq_options.quant_type = "uint8"
-    ptq_options.w_quant_type = "uint8"
-    ptq_options.samples_count = num_calib_samples
-
-    # Generate calibration data
-    calib_data = generate_calibration_data(num_calib_samples, input_shape)
-    ptq_options.set_tensor_data(calib_data)
-
-    print(f"\nPTQ options:")
-    print(f"  Calibration method: {ptq_options.calibrate_method}")
-    print(f"  Quantization type: {ptq_options.quant_type}")
-    print(f"  Weight quant type: {ptq_options.w_quant_type}")
-    print(f"  Calibration samples: {ptq_options.samples_count}")
-
-    # Read ONNX model
+    # Import ONNX model
+    print("Importing ONNX model...")
     with open(onnx_path, "rb") as f:
         model_content = f.read()
 
-    # Setup import options
     import_options = nncase.ImportOptions()
-
-    # Compile model
-    print("\nCompiling model...")
-    compiler = nncase.Compiler(compile_options)
     compiler.import_onnx(model_content, import_options)
+
+    # Configure PTQ quantization options
+    print(f"Configuring PTQ with {num_calibration_samples} calibration samples...")
+    ptq_options = nncase.PTQTensorOptions()
+    ptq_options.samples_count = num_calibration_samples
+    ptq_options.quant_type = "uint8"
+    ptq_options.w_quant_type = "uint8"
+    ptq_options.calibrate_method = "Kld"  # Kullback-Leibler divergence
+    ptq_options.finetune_weights_method = "NoFineTuneWeights"
+
+    # Generate and set calibration data
+    print("Generating calibration data...")
+    calibration_data = generate_calibration_data(input_shape, num_calibration_samples)
+    ptq_options.set_tensor_data(calibration_data)
+
+    # Apply PTQ
     compiler.use_ptq(ptq_options)
+
+    # Compile
+    print("Compiling model...")
     compiler.compile()
 
     # Generate kmodel
-    print("Generating kmodel...")
+    print(f"Generating kmodel: {output_path}")
     kmodel = compiler.gencode_tobytes()
-
-    # Save kmodel
-    with open(kmodel_path, "wb") as f:
+    with open(output_path, "wb") as f:
         f.write(kmodel)
 
-    print(f"\nQuantized model saved to {kmodel_path}")
-    print(f"Compilation artifacts saved to {dump_dir}")
+    print("✓ kmodel conversion complete")
 
 
-def main() -> None:
-    """Main quantization pipeline."""
-    # Configuration
-    checkpoint_path = Path("checkpoints/finetune/final.pt")
-    onnx_path = Path("models/recyclevision.onnx")
-    kmodel_path = Path("models/recyclevision.kmodel")
-    dump_dir = Path("models/dump")
-
-    num_classes = 3  # recyclable, trash, empty
-    input_shape = (1, 3, 224, 224)  # NCHW format
-
-    # Create output directories
-    onnx_path.parent.mkdir(exist_ok=True)
-    dump_dir.mkdir(exist_ok=True)
-
-    # Load trained model
-    print(f"Loading model from {checkpoint_path}...")
-    model = create_model(num_classes=num_classes, pretrained=False)
-
-    # Load checkpoint - handle both direct state_dict and checkpoint dict formats
-    checkpoint = torch.load(checkpoint_path, map_location="cpu")
-    if isinstance(checkpoint, dict) and "model_state" in checkpoint:
-        state_dict = checkpoint["model_state"]
-    else:
-        state_dict = checkpoint
-
-    model.load_state_dict(state_dict)
-    model.eval()
-    print("Model loaded successfully")
-
-    # Export to ONNX
-    export_to_onnx(model, input_shape, onnx_path)
-
-    # Replace Flatten with Reshape for K230 compatibility
-    print("\nReplacing Flatten nodes with Reshape...")
-    replace_flatten_with_reshape(onnx_path)
-
-    # Verify ONNX model
-    print("\nVerifying ONNX model...")
-    onnx_model = onnx.load(onnx_path)
-    onnx.checker.check_model(onnx_model)
-    print("ONNX model verification passed")
-
-    # Quantize to kmodel
-    quantize_model(
-        onnx_path=onnx_path,
-        kmodel_path=kmodel_path,
-        dump_dir=dump_dir,
-        input_shape=input_shape,
-        num_calib_samples=10,
+def main():
+    parser = argparse.ArgumentParser(description="Convert PyTorch model to kmodel")
+    parser.add_argument(
+        "--input",
+        type=str,
+        default="checkpoints/finetune/final.pt",
+        help="Path to input .pt model file (default: checkpoints/finetune/final.pt)",
+    )
+    parser.add_argument(
+        "--output",
+        type=str,
+        default="models/recyclevision.kmodel",
+        help="Output kmodel filename (default: model.kmodel)",
+    )
+    parser.add_argument(
+        "--target",
+        type=str,
+        default="k230",
+        choices=["k210", "k510", "k230"],
+        help="Target device (default: k230)",
+    )
+    parser.add_argument(
+        "--input-size",
+        type=int,
+        default=224,
+        help="Input image size (default: 224)",
+    )
+    parser.add_argument(
+        "--num-classes",
+        type=int,
+        default=3,
+        help="Number of output classes (default: 3)",
+    )
+    parser.add_argument(
+        "--calibration-samples",
+        type=int,
+        default=10,
+        help="Number of calibration samples for PTQ (default: 10)",
     )
 
-    print("\n" + "="*60)
-    print("Quantization complete!")
-    print(f"ONNX model: {onnx_path}")
-    print(f"kmodel: {kmodel_path}")
-    print(f"Artifacts: {dump_dir}")
-    print("="*60)
+    args = parser.parse_args()
+
+    # Define paths
+    input_path = Path(args.input)
+    output_dir = Path("conversion_output")
+    output_dir.mkdir(exist_ok=True)
+
+    onnx_path = output_dir / "model.onnx"
+    simplified_onnx_path = output_dir / "model_simplified.onnx"
+    kmodel_path = Path(args.output)
+
+    # Define input shape (batch_size, channels, height, width)
+    input_shape = (1, 3, args.input_size, args.input_size)
+
+    # Load checkpoint first to get num_classes if available
+    checkpoint = torch.load(input_path, map_location="cpu")
+    num_classes = args.num_classes
+
+    if isinstance(checkpoint, dict) and "num_classes" in checkpoint:
+        num_classes = checkpoint["num_classes"]
+        print(f"Using num_classes from checkpoint: {num_classes}")
+
+    print("=" * 60)
+    print("PyTorch to kmodel Conversion Pipeline")
+    print("=" * 60)
+    print(f"Input model: {input_path}")
+    print(f"Output kmodel: {kmodel_path}")
+    print(f"Target device: {args.target}")
+    print(f"Input shape: {input_shape}")
+    print(f"Number of classes: {num_classes}")
+    print("=" * 60)
+
+    # Step 1: Load PyTorch model
+    print("\n[Step 1/4] Loading PyTorch model...")
+    model = create_model(num_classes=num_classes, pretrained=False)
+
+    # Handle different checkpoint formats
+    if isinstance(checkpoint, dict):
+        if "model_state_dict" in checkpoint:
+            model.load_state_dict(checkpoint["model_state_dict"])
+        elif "state_dict" in checkpoint:
+            model.load_state_dict(checkpoint["state_dict"])
+        elif "model_state" in checkpoint:
+            model.load_state_dict(checkpoint["model_state"])
+        else:
+            model.load_state_dict(checkpoint)
+    else:
+        model.load_state_dict(checkpoint)
+
+    model.eval()
+    print("✓ Model loaded successfully")
+
+    # Step 2: Export to ONNX
+    print("\n[Step 2/4] Converting to ONNX...")
+    export_to_onnx(model, input_shape, str(onnx_path))
+
+    # Step 3: Simplify ONNX
+    print("\n[Step 3/4] Simplifying ONNX model...")
+    simplify_onnx(str(onnx_path), str(simplified_onnx_path))
+
+    # Step 4: Convert to kmodel
+    print("\n[Step 4/4] Converting to kmodel...")
+    convert_to_kmodel(
+        str(simplified_onnx_path),
+        str(kmodel_path),
+        input_shape,
+        target=args.target,
+        num_calibration_samples=args.calibration_samples,
+    )
+
+    print("\n" + "=" * 60)
+    print("✓ Conversion complete!")
+    print(f"Output saved to: {kmodel_path}")
+    print("=" * 60)
 
 
 if __name__ == "__main__":

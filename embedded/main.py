@@ -58,7 +58,7 @@ try:
 except Exception as e:
     raise RuntimeError("This script must run on the K230 CanMV runtime with nncase_runtime and media modules available.") from e
 
-MODEL_PATH = "/sdcard/models/recyclevision_3cls.kmodel"
+MODEL_PATH = "recyclevision.kmodel"
 MODEL_IN_NCHW = (1, 3, 320, 320)
 LABELS = ["empty", "recyclable", "trash"]
 

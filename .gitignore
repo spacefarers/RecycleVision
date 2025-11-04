@@ -187,3 +187,5 @@ logs/
 # *.csv
 # *.json
 # *.parquet
+output/
+models/dump/

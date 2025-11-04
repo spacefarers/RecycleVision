@@ -2,3 +2,7 @@ torch>=2.0
 torchvision>=0.15
 PyYAML>=6.0
 gradio>=4.0
+numpy
+onnx
+torchvision
+onnxscript
