@@ -1,0 +1,146 @@
+digraph
+{
+    "\"0\"" [ label = input_1, shape = rectangle ]
+    "\"1\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_39</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">f32[1,3]</td></tr></table>>, shape = plain ]
+    "\"3\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_38</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">i8[1,256,1,1]</td></tr></table>>, shape = plain ]
+    "\"5\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_37</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">i8[1,1,1,256]</td></tr></table>>, shape = plain ]
+    "\"7\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_36</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">i8[1,512,1,1]</td></tr></table>>, shape = plain ]
+    "\"9\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_35</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">i8[1,1,1,512]</td></tr></table>>, shape = plain ]
+    "\"11\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,1280,1,1]</td></tr></table>>, shape = plain ]
+    "\"12\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_34</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">f32[1,1280,7,7]</td></tr></table>>, shape = plain ]
+    "\"14\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,1152,1,1]</td></tr></table>>, shape = plain ]
+    "\"15\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_33</td><td port="P0">ddrIf</td><td port="P1">ddrIf2</td></tr><tr><td colspan="4">f32[1,1152,7,7]</td></tr></table>>, shape = plain ]
+    "\"17\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_32</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,1152,7,7]</td></tr></table>>, shape = plain ]
+    "\"19\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,1152,1,1]</td></tr></table>>, shape = plain ]
+    "\"20\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_31</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">f32[1,1152,7,7]</td></tr></table>>, shape = plain ]
+    "\"22\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_30</td><td port="P0">ddrIf</td><td port="P1">ddrIf2</td></tr><tr><td colspan="4">i8[1,192,7,7]</td></tr></table>>, shape = plain ]
+    "\"24\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_29</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,1152,7,7]</td></tr></table>>, shape = plain ]
+    "\"26\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,1152,1,1]</td></tr></table>>, shape = plain ]
+    "\"27\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_28</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">f32[1,1152,7,7]</td></tr></table>>, shape = plain ]
+    "\"29\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_27</td><td port="P0">ddrIf</td><td port="P1">ddrIf2</td></tr><tr><td colspan="4">i8[1,192,7,7]</td></tr></table>>, shape = plain ]
+    "\"31\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_26</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,1152,7,7]</td></tr></table>>, shape = plain ]
+    "\"33\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,1152,1,1]</td></tr></table>>, shape = plain ]
+    "\"34\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_25</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">f32[1,1152,7,7]</td></tr></table>>, shape = plain ]
+    "\"36\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_24</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,192,7,7]</td></tr></table>>, shape = plain ]
+    "\"38\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,672,1,1]</td></tr></table>>, shape = plain ]
+    "\"39\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_23</td><td port="P0">ddrIf</td><td port="P1">ddrIf2</td></tr><tr><td colspan="4">f32[1,672,7,7]</td></tr></table>>, shape = plain ]
+    "\"41\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_22</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,672,14,14]</td></tr></table>>, shape = plain ]
+    "\"43\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,672,1,1]</td></tr></table>>, shape = plain ]
+    "\"44\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_21</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">f32[1,672,14,14]</td></tr></table>>, shape = plain ]
+    "\"46\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_20</td><td port="P0">ddrIf</td><td port="P1">ddrIf2</td></tr><tr><td colspan="4">i8[1,112,14,14]</td></tr></table>>, shape = plain ]
+    "\"48\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_19</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,672,14,14]</td></tr></table>>, shape = plain ]
+    "\"50\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,672,1,1]</td></tr></table>>, shape = plain ]
+    "\"51\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_18</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">f32[1,672,14,14]</td></tr></table>>, shape = plain ]
+    "\"53\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_17</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,112,14,14]</td></tr></table>>, shape = plain ]
+    "\"55\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,480,1,1]</td></tr></table>>, shape = plain ]
+    "\"56\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_16</td><td port="P0">ddrIf</td><td port="P1">ddrIf2</td></tr><tr><td colspan="4">f32[1,480,14,14]</td></tr></table>>, shape = plain ]
+    "\"58\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_15</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,480,14,14]</td></tr></table>>, shape = plain ]
+    "\"60\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,480,1,1]</td></tr></table>>, shape = plain ]
+    "\"61\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_14</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">f32[1,480,14,14]</td></tr></table>>, shape = plain ]
+    "\"63\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_13</td><td port="P0">ddrIf</td><td port="P1">ddrIf2</td></tr><tr><td colspan="4">i8[1,80,14,14]</td></tr></table>>, shape = plain ]
+    "\"65\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_12</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,480,14,14]</td></tr></table>>, shape = plain ]
+    "\"67\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,480,1,1]</td></tr></table>>, shape = plain ]
+    "\"68\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_11</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">f32[1,480,14,14]</td></tr></table>>, shape = plain ]
+    "\"70\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_10</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,80,14,14]</td></tr></table>>, shape = plain ]
+    "\"72\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,240,1,1]</td></tr></table>>, shape = plain ]
+    "\"73\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_9</td><td port="P0">ddrIf</td><td port="P1">ddrIf2</td></tr><tr><td colspan="4">f32[1,240,14,14]</td></tr></table>>, shape = plain ]
+    "\"75\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_8</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,240,28,28]</td></tr></table>>, shape = plain ]
+    "\"77\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,240,1,1]</td></tr></table>>, shape = plain ]
+    "\"78\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_7</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">f32[1,240,28,28]</td></tr></table>>, shape = plain ]
+    "\"80\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_6</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,40,28,28]</td></tr></table>>, shape = plain ]
+    "\"82\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,144,1,1]</td></tr></table>>, shape = plain ]
+    "\"83\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_5</td><td port="P0">ddrIf</td><td port="P1">ddrIf2</td></tr><tr><td colspan="4">f32[1,144,28,28]</td></tr></table>>, shape = plain ]
+    "\"85\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_4</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,144,56,56]</td></tr></table>>, shape = plain ]
+    "\"87\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,144,1,1]</td></tr></table>>, shape = plain ]
+    "\"88\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_3</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">f32[1,144,56,56]</td></tr></table>>, shape = plain ]
+    "\"90\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_2</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">i8[1,24,56,56]</td></tr></table>>, shape = plain ]
+    "\"92\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,96,1,1]</td></tr></table>>, shape = plain ]
+    "\"93\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_1</td><td port="P0">ddrIf</td><td port="P1">ddrIf</td></tr><tr><td colspan="4">f32[1,96,56,56]</td></tr></table>>, shape = plain ]
+    "\"95\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Reduce(ReduceOp.Mean)</td><td port="P0">input</td><td port="P1">i32[2]</td><td port="P2">f32</td><td port="P3">bool</td></tr><tr><td colspan="6">f32[1,32,1,1]</td></tr></table>>, shape = plain ]
+    "\"96\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>func_0</td><td port="P0">ddrIf</td></tr><tr><td colspan="3">f32[1,32,112,112]</td></tr></table>>, shape = plain ]
+    "\"98\"" [ label = <<table border="0" cellborder="1" cellspacing="0"><tr><td>Call</td><td>Cast(DataTypes.Float32, CastMode.KDefault)</td><td port="P0">input</td></tr><tr><td colspan="3">f32[1,3,224,224]</td></tr></table>>, shape = plain ]
+
+    "\"0\"" -> "\"98\"":P0
+    "\"98\"" -> "\"96\"":P0
+    "\"96\"" -> "\"95\"":P0
+    "\"95\"" -> "\"93\"":P0
+    "\"96\"" -> "\"93\"":P1
+    "\"93\"" -> "\"92\"":P0
+    "\"92\"" -> "\"90\"":P0
+    "\"93\"" -> "\"90\"":P1
+    "\"90\"" -> "\"88\"":P0
+    "\"88\"" -> "\"87\"":P0
+    "\"87\"" -> "\"85\"":P0
+    "\"88\"" -> "\"85\"":P1
+    "\"85\"" -> "\"83\"":P0
+    "\"90\"" -> "\"83\"":P1
+    "\"83\"" -> "\"82\"":P0
+    "\"82\"" -> "\"80\"":P0
+    "\"83\"" -> "\"80\"":P1
+    "\"80\"" -> "\"78\"":P0
+    "\"78\"" -> "\"77\"":P0
+    "\"77\"" -> "\"75\"":P0
+    "\"78\"" -> "\"75\"":P1
+    "\"75\"" -> "\"73\"":P0
+    "\"80\"" -> "\"73\"":P1
+    "\"73\"" -> "\"72\"":P0
+    "\"72\"" -> "\"70\"":P0
+    "\"73\"" -> "\"70\"":P1
+    "\"70\"" -> "\"68\"":P0
+    "\"68\"" -> "\"67\"":P0
+    "\"67\"" -> "\"65\"":P0
+    "\"68\"" -> "\"65\"":P1
+    "\"65\"" -> "\"63\"":P0
+    "\"70\"" -> "\"63\"":P1
+    "\"63\"" -> "\"61\"":P0
+    "\"61\"" -> "\"60\"":P0
+    "\"60\"" -> "\"58\"":P0
+    "\"61\"" -> "\"58\"":P1
+    "\"58\"" -> "\"56\"":P0
+    "\"63\"" -> "\"56\"":P1
+    "\"56\"" -> "\"55\"":P0
+    "\"55\"" -> "\"53\"":P0
+    "\"56\"" -> "\"53\"":P1
+    "\"53\"" -> "\"51\"":P0
+    "\"51\"" -> "\"50\"":P0
+    "\"50\"" -> "\"48\"":P0
+    "\"51\"" -> "\"48\"":P1
+    "\"48\"" -> "\"46\"":P0
+    "\"53\"" -> "\"46\"":P1
+    "\"46\"" -> "\"44\"":P0
+    "\"44\"" -> "\"43\"":P0
+    "\"43\"" -> "\"41\"":P0
+    "\"44\"" -> "\"41\"":P1
+    "\"41\"" -> "\"39\"":P0
+    "\"46\"" -> "\"39\"":P1
+    "\"39\"" -> "\"38\"":P0
+    "\"38\"" -> "\"36\"":P0
+    "\"39\"" -> "\"36\"":P1
+    "\"36\"" -> "\"34\"":P0
+    "\"34\"" -> "\"33\"":P0
+    "\"33\"" -> "\"31\"":P0
+    "\"34\"" -> "\"31\"":P1
+    "\"31\"" -> "\"29\"":P0
+    "\"36\"" -> "\"29\"":P1
+    "\"29\"" -> "\"27\"":P0
+    "\"27\"" -> "\"26\"":P0
+    "\"26\"" -> "\"24\"":P0
+    "\"27\"" -> "\"24\"":P1
+    "\"24\"" -> "\"22\"":P0
+    "\"29\"" -> "\"22\"":P1
+    "\"22\"" -> "\"20\"":P0
+    "\"20\"" -> "\"19\"":P0
+    "\"19\"" -> "\"17\"":P0
+    "\"20\"" -> "\"17\"":P1
+    "\"17\"" -> "\"15\"":P0
+    "\"22\"" -> "\"15\"":P1
+    "\"15\"" -> "\"14\"":P0
+    "\"14\"" -> "\"12\"":P0
+    "\"15\"" -> "\"12\"":P1
+    "\"12\"" -> "\"11\"":P0
+    "\"11\"" -> "\"9\"":P0
+    "\"9\"" -> "\"7\"":P0
+    "\"7\"" -> "\"5\"":P0
+    "\"5\"" -> "\"3\"":P0
+    "\"3\"" -> "\"1\"":P0
+}

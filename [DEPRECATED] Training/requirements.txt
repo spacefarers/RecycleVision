@@ -1,0 +1,12 @@
+torch>=2.0
+torchvision>=0.15
+PyYAML>=6.0
+gradio>=4.0
+numpy
+onnx
+torchvision
+onnxscript
+
+# Optional dependencies for 8-bit training
+# Uncomment the following to enable 8-bit quantization-aware training
+# bitsandbytes>=0.41.0  # For 8-bit AdamW optimizer (CUDA/CPU)
