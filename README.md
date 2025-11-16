@@ -1,92 +1,92 @@
-# k230图像分类教程
+# K230 Image Classification Tutorial
 
-## 简介
+## Introduction
 
-K230芯片是嘉楠科技 Kendryte®系列AIoT芯片中的最新一代SoC产品。该芯片采用全新的多异构单元加速计算架构，集成了2个RISC-V高能效计算核心，内置新一代KPU（Knowledge Process Unit）智能计算单元，具备多精度AI算力，广泛支持通用的AI计算框架，部分典型网络的利用率超过了70%。
-该芯片同时具备丰富多样的外设接口，以及2D、2.5D等多个标量、向量、图形等专用硬件加速单元，可以对多种图像、视频、音频、AI等多样化计算任务进行全流程计算加速，具备低延迟、高性能、低功耗、快速启动、高安全性等多项特性。
+The K230 chip is the latest generation SoC product in Canaan's Kendryte® series of AIoT chips. This chip adopts a new multi-heterogeneous unit accelerated computing architecture, integrating 2 RISC-V high-efficiency computing cores and a new generation KPU (Knowledge Process Unit) intelligent computing unit with multi-precision AI computing power. It widely supports general AI computing frameworks, with utilization rates exceeding 70% for some typical networks.
+The chip also features rich and diverse peripheral interfaces, as well as multiple dedicated hardware acceleration units for scalars, vectors, graphics (2D, 2.5D, etc.), capable of performing full-process computing acceleration for various tasks including images, video, audio, AI, and more. It has characteristics such as low latency, high performance, low power consumption, fast startup, and high security.
 ![image.png](./resource/structure.png)
-本教程将介绍如何使用PyTorch训练图像分类AI模型，并将模型转换为kmodel格式，在嘉楠Kendryte230芯片上部署该模型。
-实现该过程需要具备python和C++编程的基础知识，了解linux系统的简单操作，了解一定的深度学习知识，但并不是必须的。
-本教程将实现从数据准备、模型训练和测试、k230镜像编译烧录、C++示例代码编译可执行文件、PC端和K230之间网络配置和文件传输、k230端部署的全流程过程。操作系统为linux操作系统，深度学习框架选择PyTorch实现。
-本教程选择蔬菜分类场景作为示例项目。
+This tutorial will introduce how to train an image classification AI model using PyTorch and convert the model to kmodel format for deployment on the Canaan Kendryte K230 chip.
+This process requires basic knowledge of Python and C++ programming, understanding of simple Linux system operations, and some deep learning knowledge, though not mandatory.
+This tutorial will cover the entire process from data preparation, model training and testing, K230 image compilation and flashing, C++ sample code compilation to executable files, network configuration and file transfer between PC and K230, to K230 deployment. The operating system is Linux, and the deep learning framework used is PyTorch.
+This tutorial uses a vegetable classification scenario as an example project.
 
-## 环境说明
+## Environment Setup
 
-### 显卡环境
+### GPU Environment
 
-本教程默认使用CUDA的用户已经安装好合适的显卡驱动，且已搭建好CUDA环境。
+This tutorial assumes that CUDA users have already installed the appropriate graphics card drivers and set up the CUDA environment.
 
-### 安装anaconda
+### Installing Anaconda
 
-如果已安装anaconda或miniconda，请忽略此步骤。
-anaconda用于创建虚拟环境，将PyTorch模型训练环境和其他环境隔离。
+If anaconda or miniconda is already installed, skip this step.
+Anaconda is used to create virtual environments to isolate the PyTorch model training environment from other environments.
 
 ```shell
 apt-get install -y wget
-wget https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh #可以选择合适的版本安装
+wget https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh # You can choose a suitable version to install
 chmod +x Anaconda3-5.3.0-Linux-x86_64.sh
 ./Anaconda3-5.3.0-Linux-x86_64.sh
 ```
 
-出现如下界面：
+The following interface will appear:
 
 ![image.png](./resource/anaconda1.png)
 
-点击Enter(回车键)
+Press Enter
 
-此时显示Anaconda的信息，并且会出现More，继续按Enter，直到如下图所示:
+At this point, Anaconda information will be displayed, and "More" will appear. Continue pressing Enter until you see the following:
 
 ![image.png](./resource/anaconda2.png)
 
-输入 yes
+Type yes
 ![image.png](./resource/anaconda3.png)
 
-继续点击 Enter
+Continue pressing Enter
 
 ![image.png](./resource/anaconda4.png)
 
-输入 yes，添加环境变量
+Type yes to add environment variables
 
-检查是否安装成功：
+Check if the installation was successful:
 
 ```shell
 conda -V
 ```
 
-若返回conda版本，表示安装成功。
+If the conda version is returned, the installation was successful.
 
-### 安装docker
+### Installing Docker
 
-若已安装docker，请忽略此步骤。
-Docker官方和国内daocloud都提供了一键安装的脚本，使得Docker的安装更加便捷。
-官方的一键安装方式：
+If Docker is already installed, skip this step.
+Docker official and domestic daocloud both provide one-click installation scripts, making Docker installation more convenient.
+Official one-click installation method:
 
 ```shell
 curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 ```
 
-国内 daocloud一键安装命令：
+Domestic daocloud one-click installation command:
 
 ```shell
 curl -sSL https://get.daocloud.io/docker | sh
 ```
 
-执行上述任一条命令，耐心等待即可完成Docker的安装。
+Execute any of the above commands and wait patiently to complete the Docker installation.
 
-### 创建模型训练环境
+### Creating Model Training Environment
 
 ```shell
-# 使用anaconda创建模型训练的虚拟环境
+# Use anaconda to create a virtual environment for model training
 conda create -n myenv python=3.9
-# 激活虚拟环境
+# Activate the virtual environment
 conda activate myenv
-# 按照项目内的requirements.txt安装训练所用的python库,等待安装
+# Install Python libraries for training according to requirements.txt in the project, wait for installation
 pip install -r requirements.txt
 ```
 
-在requirements.txt中会安装模型转换的包nncase和nncase-kpu，`nncase 是一个为 AI 加速器设计的神经网络编译器，参考[nncase](https://github.com/kendryte/nncase)。
+The requirements.txt file will install the model conversion packages nncase and nncase-kpu. `nncase is a neural network compiler designed for AI accelerators, see [nncase](https://github.com/kendryte/nncase).
 
-### 安装dotnet
+### Installing .NET
 
 ```shell
 wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
@@ -96,28 +96,28 @@ apt install -y apt-transport-https
 apt install -y dotnet-sdk-7.0
 ```
 
-### 添加nncase插件到环境变量
+### Adding nncase Plugin to Environment Variables
 
-***注意：此步骤需要根据个人机器中实际情况完成。如果使用anaconda虚拟环境，在anaconda安装位置下的envs目录下，选择为训练创建的虚拟环境myenv，在其下面选择lib/python3.9/site-packages/，也就是pip安装requirements.txt内nncase和nncase-kpu的安装位置。source后会退出当前虚拟环境，需要再次激活。如果直接使用机器上的python，则需要添加其下的lib/python3.9/site_packages/。具体python版本自己控制。***
+***Note: This step needs to be completed according to your actual machine setup. If using an anaconda virtual environment, under the envs directory in the anaconda installation location, select the virtual environment myenv created for training, and under it select lib/python3.9/site-packages/, which is where pip installed nncase and nncase-kpu from requirements.txt. After sourcing, you will exit the current virtual environment and need to activate it again. If using Python directly on the machine, you need to add its lib/python3.9/site_packages/. Control the specific Python version yourself.***
 
 ```shell
-# python安装路径由自己机器实际情况修改
+# Modify the Python installation path according to your actual machine setup
 export NNCASE_PLUGIN_PATH=$NNCASE_PLUGIN_PATH:/usr/local/lib/python3.9/site-packages/
 export PATH=$PATH:/usr/local/lib/python3.9/site-packages/
 source /etc/profile
 conda activate myenv
 ```
 
-## 使用自定义数据集训练模型
+## Training Models with Custom Datasets
 
-### 组织数据
+### Organizing Data
 
-图像分类任务自定义数据集按照如下格式组织，根目录下包括：以类别名称命名的子目录，子目录中是其类别的所有图像样本。
+For image classification tasks, organize custom datasets in the following format: the root directory contains subdirectories named by category names, and within each subdirectory are all image samples of that category.
 <img src="./resource/cls_dataset.png" alt="image.png" style="zoom: 50%;" />
 
-### 配置训练参数
+### Configuring Training Parameters
 
-给出的训练脚本中配置文件config.yaml设置如下：
+The configuration file config.yaml in the provided training script is set as follows:
 
 ```yaml
 dataset:
@@ -148,220 +148,220 @@ deploy:
   ptq_option: 0 # 量化类型，0为uint8，1，2，3，4为uint16的不同形式
 ```
 
-### 模型训练
+### Model Training
 
-进入到工程的scripts目录，执行训练代码：
+Navigate to the scripts directory of the project and execute the training code:
 
 ```shell
 python3 main.py
 ```
 
-如果训练成功，在配置文件的save_path目录下可以找到训练好的last.pth、best.pth、best.onnx、best.kmodel。
+If training is successful, you will find the trained last.pth, best.pth, best.onnx, and best.kmodel files in the save_path directory specified in the configuration file.
 
-### 模型测试推理
+### Model Testing and Inference
 
-设置配置文件中的inference部分，设置测试配置，执行测试代码：
+Configure the inference section in the configuration file, set the test configuration, and execute the test code:
 
 ```shell
 python3 inference.py
 ```
 
-## 使用k230部署模型
+## Deploy Model Using K230
 
-### 环境准备和镜像编译
+### Environment Preparation and Image Compilation
 
-**注意：训练环境中nncase和nncase-kpu的版本和SDK的版本要对应，nncase和nncase-kpu版本为2.9.0，SDK版本为1.8。**
+**Note: The versions of nncase and nncase-kpu in the training environment must match the SDK version. nncase and nncase-kpu version is 2.9.0, SDK version is 1.8.**
 
-K230 SDK需要在**_Linux环境_**下编译，推荐使用Ubuntu Liunx 20.04。
-使用docker编译环境，下载[k230_sdk](https://github.com/kendryte/k230_sdk)。
+K230 SDK must be compiled in a **_Linux environment_**, Ubuntu Linux 20.04 is recommended.
+Use docker compilation environment, download [k230_sdk](https://github.com/kendryte/k230_sdk).
 
 ```shell
-# 下载docker编译镜像
+# Download the docker compilation image
 docker pull ghcr.io/kendryte/k230_sdk
-# 可以使用以下命令确认docker镜像拉取成功
+# You can use the following command to confirm that the docker image was pulled successfully
 docker images | grep k230_sdk
-# 下载sdk
+# Download the SDK
 git clone https://github.com/kendryte/k230_sdk.git
 cd k230_sdk
-# 下载工具链，make prepare_sourcecode 会自动下载Linux和RT-Smart toolchain, buildroot package, AI package等. 请确保该命令执行成功并没有Error产生，下载时间和速度以实际网速为准。
+# Download the toolchain. make prepare_sourcecode will automatically download Linux and RT-Smart toolchain, buildroot package, AI package, etc. Please ensure that this command executes successfully without errors. Download time and speed depend on your network connection.
 make prepare_sourcecode
-# 创建docker容器，$(pwd):$(pwd)表示系统当前目录映射到docker容器内部的相同目录下，将系统下的工具链目录映射到docker容器内部的/opt/toolchain目录下
+# Create docker container. $(pwd):$(pwd) means the current directory is mapped to the same directory inside the docker container, and the toolchain directory on the system is mapped to /opt/toolchain inside the docker container
 docker run -u root -it -v $(pwd):$(pwd) -v $(pwd)/toolchain:/opt/toolchain -w $(pwd) ghcr.io/kendryte/k230_sdk /bin/bash
 ```
 
-K230现有多种开发板，本教程支持CANMV-K230-V1.0/V1.1和 01Studio CanMV K230。编译开发板镜像，您可以选择在嘉楠开发者社区下载对应双系统镜像，下载链接见：[嘉楠开发者社区-资料下载](https://developer.canaan-creative.com/resource?selected=0-0-0)
+The K230 has multiple development boards. This tutorial supports CANMV-K230-V1.0/V1.1 and 01Studio CanMV K230. To compile the development board image, you can download the corresponding dual-system image from the Canaan Developer Community. Download link: [Canaan Developer Community - Resource Downloads](https://developer.canaan-creative.com/resource?selected=0-0-0)
 
 ```shell
-# 在docker中编译镜像，请耐心等待完成，不同类型开发板编译命令不同
-# 如果是CANMV-K230开发板
+# Compile the image in docker. Please wait patiently for completion. Different development boards have different compilation commands
+# For CANMV-K230 development board
 make CONF=k230_canmv_defconfig
-# 如果是01Studio开发板，需要自己编译固件
+# For 01Studio development board, you need to compile the firmware yourself
 make CONF=k230_canmv_01studio_defconfig
 ```
 
-### 镜像烧录
+### Image Flashing
 
-**开发板镜像**：
+**Development Board Image**:
 
-编译结束后在`output/****_defconfig/images`目录下可以找到编译好的镜像文件：
+After compilation is complete, you can find the compiled image files in the `output/****_defconfig/images` directory:
 
 ```
 k230_canmv_defconfig/images
 ├── big-core
 ├── little-core
-├── sysimage-sdcard.img    # SD卡镜像
-├── sysimage-sdcard.img.gz # SD卡镜像压缩包
+├── sysimage-sdcard.img    # SD card image
+├── sysimage-sdcard.img.gz # SD card image compressed package
 ```
 
-**烧录TF卡**
+**Flashing TF Card**
 
-详细烧录步骤参考[CanMV K230 教程 — K230 Linux+RT-Smart SDK](https://developer.canaan-creative.com/k230/zh/dev/CanMV_K230_教程.html#id7)。
+For detailed flashing steps, refer to [CanMV K230 Tutorial — K230 Linux+RT-Smart SDK](https://developer.canaan-creative.com/k230/zh/dev/CanMV_K230_教程.html#id7).
 
-### 上电启动开发板
+### Powering On and Starting the Development Board
 
-K230 CanMV-K230开发板支持SDCard启动方式、HDMI输出显示，因此，需要准备一张TF卡，此外建议准备一个HDMI显示器。
+The K230 CanMV-K230 development board supports SDCard boot mode and HDMI output display. Therefore, you need to prepare a TF card. Additionally, it is recommended to prepare an HDMI display.
 
-1. 将烧录完成的TF卡插入开发板TF卡槽中
-2. 开发板上电，此时，系统可上电启动
+1. Insert the flashed TF card into the development board's TF card slot
+2. Power on the development board, and the system will boot up
 
-系统上电后，默认会有**两个串口设备**，可分别用于访问小核Linux和大核RTSmart
+After the system powers on, there will be **two serial port devices** by default, which can be used to access the little-core Linux and big-core RT-Smart respectively.
 
-小核Linux默认用户名root，密码为空。大核RTSmart系统中开机会自动启动一个应用程序，可按`q`键退出至命令提示符终端。
+The little-core Linux default username is root, and the password is empty. The big-core RT-Smart system will automatically start an application on boot. You can press the `q` key to exit to the command prompt terminal.
 
-### PC和k230文件拷贝方法
+### File Transfer Between PC and K230
 
-#### 离线拷贝
+#### Offline Copy
 
-直接插拔TF卡将需要的文件拷贝到TF卡根目录下。开发板上电后，通过调试串口可在`sharefs` 目录下发现拷贝的文件。
+Directly insert/remove the TF card and copy the required files to the TF card root directory. After the development board is powered on, the copied files can be found in the `sharefs` directory through the debug serial port.
 
-#### windows系统
+#### Windows System
 
-##### scp拷贝
+##### SCP Copy
 
-k230_sdk 1.5版本之后支持连接网线自动获取IP，您可以使用scp拷贝文件。
+K230_sdk 1.5 version and later support automatic IP acquisition when connecting an Ethernet cable. You can use scp to copy files.
 
-##### 局域网TFTP拷贝
+##### Local Network TFTP Copy
 
-（1）Tftpd64安装，在[https://bitbucket.org/phjounin/tftpd64/downloads/](https://bitbucket.org/phjounin/tftpd64/downloads/)下载。
+(1) Tftpd64 Installation: Download from [https://bitbucket.org/phjounin/tftpd64/downloads/](https://bitbucket.org/phjounin/tftpd64/downloads/).
 
-（2）MobaXterm安装：在[https://mobaxterm.mobatek.net/download.html](https://mobaxterm.mobatek.net/download.html)下载安装。
+(2) MobaXterm Installation: Download and install from [https://mobaxterm.mobatek.net/download.html](https://mobaxterm.mobatek.net/download.html).
 
-（3）配置PC网络：
+(3) Configure PC Network:
 
 <img src="./resource/net1.png" alt="image.png" style="zoom:50%;" />
 <img src="./resource/net2.png" alt="image.png" style="zoom:50%;" />
 <img src="./resource/net3.png" alt="image.png" style="zoom:50%;" />
 
-（4）开发板网络配置：
+(4) Development Board Network Configuration:
 
-开发板上电，电源线、网线、COM口连接线配置见文档：[K230_SDK_使用说明](https://github.com/kendryte/k230_docs/blob/main/zh/01_software/board/K230_SDK_%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md)。打开MobaXterm，通过两路COM串口连接开发板，COM编号不固定，较小为小核串口，较大为大核串口。
+Power on the development board. The power cable, network cable, and COM port connection cable configuration are detailed in the documentation: [K230_SDK_Usage Guide](https://github.com/kendryte/k230_docs/blob/main/zh/01_software/board/K230_SDK_%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md). Open MobaXterm and connect to the development board through two COM serial ports. The COM numbers are not fixed; the smaller number is the little-core serial port, and the larger number is the big-core serial port.
 
 <img src="./resource/net4.png" alt="image.png" style="zoom:50%;" />
 
-小核进入后回车，进入如下界面，使用root登录：
+After entering the little-core, press Enter to enter the following interface and log in with root:
 
 <img src="./resource/net5.png" alt="image.png" style="zoom:50%;" />
 
-大核进入后回车，进入如下界面：
+After entering the big-core, press Enter to enter the following interface:
 
 <img src="./resource/net6.png" alt="image.png" style="zoom:50%;" />
 
-在小核配置网络：
+Configure the network on the little-core:
 
 <img src="./resource/net7.png" alt="image.png" style="zoom:50%;" />
 
-大小核共享存储区域：/sharefs
+Shared storage area for little-core and big-core: /sharefs
 
 <img src="./resource/net8.png" alt="image.png" style="zoom:50%;" />
 
-当要从Tftpd64配置的文件中拷贝数据时，在小核界面使用如下命令：
+When copying data from files configured in Tftpd64, use the following command on the little-core interface:
 
 ```shell
-# 192.168.1.2 为PC的局域网IP
+# 192.168.1.2 is the PC's local network IP
 tftp -g -r your_file_name 192.168.1.2
 ```
 
-当将开发板文件拷贝到PC端Tftpd64配置的文件夹下时，在小核使用如下命令：
+When copying development board files to the folder configured in Tftpd64 on the PC, use the following command on the little-core:
 
 ```shell
-# 192.168.1.2 为PC的局域网IP
+# 192.168.1.2 is the PC's local network IP
 tftp -p -r your_file_name 192.168.1.2
 ```
 
-#### Linux系统
+#### Linux System
 
-在Linux系统中，PC正常连接网络，开发板可以通过网线连接PC所在网关下其他网口，通过scp命令实现文件传输。
+On Linux systems, the PC is normally connected to the network, and the development board can connect to other network ports under the same gateway as the PC through a network cable to achieve file transfer via scp commands.
 
-开发板上电，进入大小核COM界面，在小核执行scp传输命令：
+Power on the development board and enter the big-core and little-core COM interfaces. Execute scp transfer commands on the little-core:
 
 ```
-# 从PC拷贝文件至开发板
-scp 用户名@域名或IP:文件所在目录 开发板目的目录
-# 从开发板拷贝文件至PC
-scp 开发板待拷贝目录 用户名@域名或IP:PC目的目录
+# Copy files from PC to development board
+scp username@domain_or_IP:file_directory development_board_destination_directory
+# Copy files from development board to PC
+scp development_board_file_directory username@domain_or_IP:PC_destination_directory
 ```
 
-### 上板code解析
+### Code Analysis for On-Board Deployment
 
-完成上述开发板的准备工作后，我们可以使用C++编写自己的代码，下面就图像分类任务的示例代码进行解析。本教程给出相关图像分类任务的示例代码，并进行简单解析。
+After completing the above preparation work for the development board, we can write our own code in C++. Below is an analysis of the sample code for image classification tasks. This tutorial provides sample code for image classification tasks and provides a brief analysis.
 
-#### 代码结构
+#### Code Structure
 
 ```
 k230_code
 ├──cmake
-    ├──link.lds #链接脚本
+    ├──link.lds # Linker script
       ├──Riscv64.cmake
 ├──k230_deploy
-      ├──ai_base.cc # 模型部署基类实现
-      ├──ai_base.h # 模型部署基类，封装了nncase加载、input设置、模型推理、获取output操作，后续具体任务开发只需关注模型的前处理、后处理即可
-      ├──classification.cc # 图像分类code类实现
-      ├──classification.h # 图像分类类定义，继承AIBase，用于加载kmodel实现图像分类任务,封装模型推理的前后处理
-      ├──main.cc # 主函数，参数解析，初始化classification类示例，实现上板功能
-      ├──scoped_timing.hpp # 时间测试工具
-      ├──utils.cc # 工具类实现 
-      ├──utils.h # 工具类, 封装了图像分类任务的常用函数，包括读取二进制文件、保存图片、图像处理、结果绘制等，用户可根据自己需求丰富该文件
-      ├──vi_vo.h # 视频输入输出头文件
-      ├──CMakeLists.txt # CMake脚本用于构建一个使用C/C++源文件的可执行文件，并链接到各种库
-├──build_app.sh # 编译脚本，使用交叉编译工具链编译k230_deploy工程
-├──CMakeLists.txt # CMake脚本用于构建 nncase_sdk 的项目工程
+      ├──ai_base.cc # Implementation of model deployment base class
+      ├──ai_base.h # Model deployment base class, encapsulates nncase loading, input settings, model inference, and output retrieval operations. Subsequent task development only needs to focus on model preprocessing and postprocessing
+      ├──classification.cc # Implementation of image classification code class
+      ├──classification.h # Image classification class definition, inherits from AIBase, used to load kmodel for image classification tasks, encapsulates model inference preprocessing and postprocessing
+      ├──main.cc # Main function, parameter parsing, initialization of classification class instance, implementation of on-board functionality
+      ├──scoped_timing.hpp # Time measurement tool
+      ├──utils.cc # Utility class implementation
+      ├──utils.h # Utility class, encapsulates common functions for image classification tasks, including reading binary files, saving images, image processing, result drawing, etc. Users can enrich this file according to their needs
+      ├──vi_vo.h # Video input/output header file
+      ├──CMakeLists.txt # CMake script for building an executable file using C/C++ source files and linking to various libraries
+├──build_app.sh # Compilation script, uses cross-compilation toolchain to compile the k230_deploy project
+├──CMakeLists.txt # CMake script for building the nncase_sdk project
 ```
 
-#### 核心代码
+#### Core Code
 
 ```cpp
 /**
- * @brief AI基类，封装nncase相关操作
- * 主要封装了nncase的加载、设置输入、运行、获取输出操作，后续开发demo只需要关注模型的前处理、后处理即可
+ * @brief AI base class, encapsulates nncase-related operations
+ * Mainly encapsulates nncase loading, input settings, execution, and output retrieval. Subsequent development only needs to focus on model preprocessing and postprocessing
  */
 class AIBase
 {
 public:
 /**
-     * @brief AI基类构造函数，加载kmodel,并初始化kmodel输入、输出
-     * @param kmodel_file kmodel文件路径
-     * @param debug_mode  0（不调试）、 1（只显示时间）、2（显示所有打印信息）
+     * @brief AI base class constructor, loads kmodel and initializes kmodel input and output
+     * @param kmodel_file Path to kmodel file
+     * @param debug_mode  0 (no debug), 1 (show time only), 2 (show all debug info)
      * @return None
      */
 AIBase(const char *kmodel_file,const string model_name, const int debug_mode = 1);
 
 /**
-     * @brief AI基类析构函数
+     * @brief AI base class destructor
      * @return None
      */
 ~AIBase();
 
 /**
-     * @brief 设置kmodel输入
-     * @param buf 输入数据指针
-     * @param size 输入数据大小
+     * @brief Set kmodel input
+     * @param buf Input data pointer
+     * @param size Input data size
      * @return None
      */
 void set_input(const unsigned char *buf, size_t size);
 
 /**
-     * @brief 根据索引获取kmodel输入tensor
-     * @param idx 输入数据指针
+     * @brief Get kmodel input tensor by index
+     * @param idx Input data pointer
      * @return None
      */
 runtime_tensor get_input_tensor(size_t idx);
@@ -369,19 +369,19 @@ runtime_tensor get_input_tensor(size_t idx);
 void set_input_tensor(size_t idx, runtime_tensor &tensor);
 
 /**
-     * @brief 初始化kmodel输出
+     * @brief Initialize kmodel output
      * @return None
      */
 void set_output();
 
 /**
-     * @brief 推理kmodel
+     * @brief Run kmodel inference
      * @return None
      */
 void run();
 
 /**
-     * @brief 获取kmodel输出，结果保存在对应的类属性中
+     * @brief Get kmodel output, results are saved in corresponding class attributes
      * @return None
      */
 void get_output();
@@ -389,89 +389,89 @@ void get_output();
 
 
 protected:
-string model_name_;                    // 模型名字
-int debug_mode_;                       // 调试模型，0（不打印），1（打印时间），2（打印所有）
-vector<float *> p_outputs_;            // kmodel输出对应的指针列表
+string model_name_;                    // Model name
+int debug_mode_;                       // Debug mode, 0 (no print), 1 (print time), 2 (print all)
+vector<float *> p_outputs_;            // List of pointers corresponding to kmodel outputs
 vector<vector<int>> input_shapes_;     //{{N,C,H,W},{N,C,H,W}...}
-vector<vector<int>> output_shapes_;    //{{N,C,H,W},{N,C,H,W}...}} 或 {{N,C},{N,C}...}}等
+vector<vector<int>> output_shapes_;    //{{N,C,H,W},{N,C,H,W}...}} or {{N,C},{N,C}...}} etc.
 vector<int> each_input_size_by_byte_;  //{0,layer1_length,layer1_length+layer2_length,...}
 vector<int> each_output_size_by_byte_; //{0,layer1_length,layer1_length+layer2_length,...}
 private:
 /**
-     * @brief 首次初始化kmodel输入，并获取输入shape
+     * @brief Initialize kmodel input on first run and get input shape
      * @return None
      */
 void set_input_init();
 
 /**
-     * @brief 首次初始化kmodel输出，并获取输出shape
+     * @brief Initialize kmodel output on first run and get output shape
      * @return None
      */
 void set_output_init();
 
-// kmodel解释器，从kmodel文件构建，负责模型的加载、输入输出设置和推理
-vector<unsigned char> kmodel_vec_; // 通过读取kmodel文件得到整个kmodel数据，用于传给kmodel解释器加载kmodel
+// kmodel interpreter, built from kmodel file, responsible for model loading, input/output settings, and inference
+vector<unsigned char> kmodel_vec_; // Read entire kmodel data from kmodel file for passing to kmodel interpreter to load kmodel
 interpreter kmodel_interp_; 
 };
 ```
 
-上述代码是ai_base.h文件中AIBase类的定义代码。主要定义了kmodel解释器，kmodel的相关信息，以及输入输出设置、推理过程的接口定义。具体实现在ai_base.cc中。
+The above code is the AIBase class definition in the ai_base.h file. It mainly defines the kmodel interpreter, kmodel-related information, and interface definitions for input/output settings and inference processes. The specific implementation is in ai_base.cc.
 
 ```cpp
 /**
- * @brief 分类任务
- * 主要封装了对于每一帧图片，从预处理、运行到后处理给出结果的过程
+ * @brief Classification task
+ * Mainly encapsulates the process from preprocessing, execution, to postprocessing for each image frame
  */
 class Classification : public AIBase
 {
 public:
 /**
-    * @brief Classification构造函数，加载kmodel,并初始化kmodel输入、输出分类阈值
-    * @param args        构建对象需要的参数，config.json文件（包含分类阈值，kmodel路径等）
-    * @param debug_mode  0（不调试）、 1（只显示时间）、2（显示所有打印信息）
+    * @brief Classification constructor, loads kmodel and initializes kmodel input, output, and classification threshold
+    * @param args        Parameters needed for object construction, config.json file (including classification threshold, kmodel path, etc.)
+    * @param debug_mode  0 (no debug), 1 (show time only), 2 (show all debug info)
     * @return None
     */
 Classification(string &kmodel_path, string &image_path,std::vector<std::string> labels, float cls_thresh,const int debug_mode);
 
 /**
-    * @brief Classification构造函数，加载kmodel,并初始化kmodel输入、输出分类阈值
-    * @param args        构建对象需要的参数，config.json文件（包含分类阈值，kmodel路径等）
-    * @param isp_shape   isp输入大小（chw）
-    * @param vaddr       isp对应虚拟地址
-    * @param paddr       isp对应物理地址
-    * @param debug_mode  0（不调试）、 1（只显示时间）、2（显示所有打印信息）
+    * @brief Classification constructor, loads kmodel and initializes kmodel input, output, and classification threshold
+    * @param args        Parameters needed for object construction, config.json file (including classification threshold, kmodel path, etc.)
+    * @param isp_shape   isp input size (chw)
+    * @param vaddr       isp corresponding virtual address
+    * @param paddr       isp corresponding physical address
+    * @param debug_mode  0 (no debug), 1 (show time only), 2 (show all debug info)
     * @return None
     */
 Classification(string &kmodel_path, string &image_path,std::vector<std::string> labels,float cls_thresh, FrameCHWSize isp_shape, uintptr_t vaddr, uintptr_t paddr,const int debug_mode);
 
 /**
-    * @brief Classification析构函数
+    * @brief Classification destructor
     * @return None
     */
 ~Classification();
 
 /**
-    * @brief 图片预处理
-    * @param ori_img 原始图片
+    * @brief Image preprocessing
+    * @param ori_img Original image
     * @return None
     */
 void pre_process(cv::Mat ori_img);
 
 /**
-    * @brief 视频流预处理（ai2d for isp）
+    * @brief Video stream preprocessing (ai2d for isp)
     * @return None
     */
 void pre_process();
 
 /**
-    * @brief kmodel推理
+    * @brief kmodel inference
     * @return None
     */
 void inference();
 
 /**
-    * @brief kmodel推理结果后处理
-    * @param results 后处理之后的基于原始图像的分类结果集合
+    * @brief kmodel inference result postprocessing
+    * @param results Classification results based on original image after postprocessing
     * @return None
     */
 void post_process(vector<cls_res> &results);
@@ -479,44 +479,44 @@ void post_process(vector<cls_res> &results);
 private:
 
 /**
-    * @brief 计算exp
-    * @param x 自变量值
-    * @return 返回计算exp后的结果
+    * @brief Calculate exponential
+    * @param x Variable value
+    * @return Return result after exponential calculation
     */
 float fast_exp(float x);
 
 /**
-    * @brief 计算sigmoid
-    * @param x 自变量值
-    * @return 返回计算sigmoid后的结果
+    * @brief Calculate sigmoid
+    * @param x Variable value
+    * @return Return result after sigmoid calculation
     */
 float sigmoid(float x);
 
-std::unique_ptr<ai2d_builder> ai2d_builder_; // ai2d构建器
-runtime_tensor ai2d_in_tensor_;              // ai2d输入tensor
-runtime_tensor ai2d_out_tensor_;             // ai2d输出tensor
-uintptr_t vaddr_;                            // isp的虚拟地址
-FrameCHWSize isp_shape_;                     // isp对应的地址大小
+std::unique_ptr<ai2d_builder> ai2d_builder_; // ai2d builder
+runtime_tensor ai2d_in_tensor_;              // ai2d input tensor
+runtime_tensor ai2d_out_tensor_;             // ai2d output tensor
+uintptr_t vaddr_;                            // isp virtual address
+FrameCHWSize isp_shape_;                     // isp corresponding address size
 
-float cls_thresh;      //分类阈值
-vector<string> labels; //类别名字
-int num_class;         //类别数
+float cls_thresh;      // Classification threshold
+vector<string> labels; // Category names
+int num_class;         // Number of categories
 
-float* output;         //读取kmodel输出
+float* output;         // Read kmodel output
 };
 ```
 
-上述代码是实现图像分类任务的类定义，主要定义图像分类模型推理的前处理、推理、后处理接口。初始化ai2d构建器实现用于图像预处理。还定义了一些图像分类任务的变量，比如类别数、标签列表、分类阈值等。具体实现在classification.cc中。
+The above code is the class definition for implementing image classification tasks, which mainly defines interfaces for image classification model inference preprocessing, inference, and postprocessing. It initializes the ai2d builder to implement image preprocessing. It also defines some variables for image classification tasks, such as the number of categories, label list, classification threshold, etc. The specific implementation is in classification.cc.
 
 ```cpp
 void print_usage()
 {
-    cout << "模型推理时传参说明："
+    cout << "Model inference parameter explanation:"
         << "<kmodel_path> <image_path> <debug_mode>" << endl
         << "Options:" << endl
-        << "  kmodel_path     Kmodel的路径\n"
-        << "  image_path      待推理图片路径/摄像头(None)\n"
-        << "  debug_mode      是否需要调试，0、1、2分别表示不调试、简单调试、详细调试\n"
+        << "  kmodel_path     Path to the Kmodel\n"
+        << "  image_path      Image path for inference or camera (None)\n"
+        << "  debug_mode      Whether to debug, 0, 1, 2 represent no debug, simple debug, detailed debug respectively\n"
         << "\n"
         << endl;
 }
@@ -550,7 +550,7 @@ int main(int argc, char *argv[])
 }
 ```
 
-上述代码是main.cc文件中的一部分，主要实现解析传入参数，打印使用说明，实现两个不同分支的推理。如果输入的第二个参数是推理图像路径，则调用image_proc函数进行图像推理；如果传入的是None，则调用video_proc函数进行视频流推理。
+The above code is part of the main.cc file, which mainly implements parsing input parameters, printing usage instructions, and implementing two different branches of inference. If the second input parameter is the inference image path, call the image_proc function for image inference; if None is passed, call the video_proc function for video stream inference.
 
 ```cpp
 vector<string> read_labels_txt(string &labels_txt){
@@ -562,7 +562,7 @@ vector<string> read_labels_txt(string &labels_txt){
     }
     std::string line;
     while (std::getline(file, line)) {
-        // 去除行末尾的换行符
+        // Remove newline character at end of line
         if (!line.empty() && line[line.length() - 1] == '\n') {
             line.erase(line.length() - 1);
         }
@@ -575,12 +575,12 @@ vector<string> read_labels_txt(string &labels_txt){
 
 void image_proc_cls(string &kmodel_path, string &image_path,vector<string> labels,float cls_thresh ,int debug_mode)
 {
-    //图像推理代码...
+    // Image inference code...
 }
 
 void video_proc_cls(string &kmodel_path, string &image_path,vector<string> labels,float cls_thresh , int debug_mode)
 {
-    //视频流推理代码...
+    // Video stream inference code...
 }
 
 int video_proc(char *argv[])
@@ -608,7 +608,7 @@ int image_proc(char *argv[])
 }
 ```
 
-上述代码是main.cc的一部分，主要实现参数解析功能，在image_proc核video_proc中将传入的参数解析出来，调用read_labels_txt函数将标签名称列表从labels.txt文件中读出作为参数传递给image_proc_cls和video_proc_cls调用。
+The above code is part of main.cc, mainly implementing parameter parsing functionality. In image_proc and video_proc, the input parameters are parsed, and the read_labels_txt function is called to read the label name list from the labels.txt file and pass it as parameters to image_proc_cls and video_proc_cls.
 
 ```cpp
 void image_proc_cls(string &kmodel_path, string &image_path,vector<string> labels,float cls_thresh ,int debug_mode)
@@ -627,7 +627,7 @@ void image_proc_cls(string &kmodel_path, string &image_path,vector<string> label
 }
 ```
 
-上述代码是main.cc中的图像推理代码部分，首先从图片路径初始化cv::Mat对象ori_img，然后初始化Classification实例cls，调用cls预处理函数pre_process，推理函数reference，后处理函数post_process，最后调用utils.h中的draw_cls_res将结果绘制在图片上并保存为result_cls.jpg。如您需要修改前后处理部分，可在classification.cc中进行修改，如您想添加其他工具方法，可在utils中定义，并在utils.cc中实现。
+The above code is the image inference code part in main.cc. First, it initializes a cv::Mat object ori_img from the image path, then initializes a Classification instance cls. It calls the cls preprocessing function pre_process, inference function inference, and postprocessing function post_process. Finally, it calls the draw_cls_res function in utils.h to draw the results on the image and save as result_cls.jpg. If you need to modify the preprocessing and postprocessing parts, you can do so in classification.cc. If you want to add other utility methods, you can define them in utils and implement them in utils.cc.
 
 ```cpp
 void video_proc_cls(string &kmodel_path, string &image_path,vector<string> labels,float cls_thresh , int debug_mode)
@@ -678,9 +678,9 @@ void video_proc_cls(string &kmodel_path, string &image_path,vector<string> label
 
         {
             ScopedTiming st("isp copy", debug_mode);
-            // 从vivcap中读取一帧图像到dump_info
+            // Read one frame from vivcap to dump_info
             auto vbvaddr = kd_mpi_sys_mmap_cached(dump_info.v_frame.phys_addr[0], size);
-            memcpy(vaddr, (void *)vbvaddr, SENSOR_HEIGHT * SENSOR_WIDTH * 3);  // 这里以后可以去掉，不用copy
+            memcpy(vaddr, (void *)vbvaddr, SENSOR_HEIGHT * SENSOR_WIDTH * 3);  // This can be removed later, no need to copy
             kd_mpi_sys_munmap(vbvaddr, size);
         }
 
@@ -705,7 +705,7 @@ void video_proc_cls(string &kmodel_path, string &image_path,vector<string> label
         {
             ScopedTiming st("osd copy", debug_mode);
             memcpy(pic_vaddr, osd_frame.data, osd_width * osd_height * 4);
-            //显示通道插入帧
+            // Insert frame to display channel
             kd_mpi_vo_chn_insert_frame(osd_id+3, &vf_info);  //K_VO_OSD0
             printf("kd_mpi_vo_chn_insert_frame success \n");
 
@@ -730,53 +730,53 @@ void video_proc_cls(string &kmodel_path, string &image_path,vector<string> label
 }
 ```
 
-上述代码是main.cc中对视频流进行分类操作的部分。下面是详细解析：
+The above code is the part in main.cc for performing classification operations on video streams. Below is a detailed analysis:
 
-- vivcap_start()和 vivcap_stop()函数用于开始和停止视频捕获；
+- vivcap_start() and vivcap_stop() functions are used to start and stop video capture;
 
-- k_video_frame_info vf_info定义一个 k_video_frame_info 结构体变量 vf_info，用于存储视频帧的信息；
+- k_video_frame_info vf_info defines a k_video_frame_info structure variable vf_info to store video frame information;
 
-- void *pic_vaddr = NULL定义一个 void 指针 pic_vaddr，用于存储 OSD（On-Screen Display）图像数据；
+- void *pic_vaddr = NULL defines a void pointer pic_vaddr to store OSD (On-Screen Display) image data;
 
-- memset(&vf_info, 0, sizeof(vf_info))将 vf_info 结构体的内存初始化为零，然后设置视频帧的信息，包括宽度、高度、stride 和像素格式等；
+- memset(&vf_info, 0, sizeof(vf_info)) initializes the memory of the vf_info structure to zero, then sets the video frame information, including width, height, stride, and pixel format;
 
-- block = vo_insert_frame(&vf_info, &pic_vaddr)调用 vo_insert_frame 函数插入帧数据；kd_mpi_sys_mmz_alloc_cached 函数分配一块内存，用于存储图像数据，paddr 存储物理地址，vaddr 存储虚拟地址，size 是内存块大小；
+- block = vo_insert_frame(&vf_info, &pic_vaddr) calls the vo_insert_frame function to insert frame data; kd_mpi_sys_mmz_alloc_cached function allocates a block of memory to store image data, paddr stores the physical address, vaddr stores the virtual address, and size is the memory block size;
 
-- 创建 Classification 对象 cls，用于实现分类任务；
+- Create a Classification object cls to implement the classification task;
 
-- 创建一个空的 results 向量，用于存储分类结果。
+- Create an empty results vector to store classification results.
 
-- 进入循环，只要 isp_stop 标志不为真时：
+- Enter the loop, as long as the isp_stop flag is not true:
   
-    a. 使用 kd_mpi_vicap_dump_frame 从视频捕获设备中获取一帧图像数据，存储在 dump_info 中；
+    a. Use kd_mpi_vicap_dump_frame to get one frame of image data from the video capture device, stored in dump_info;
   
-    b. 通过 kd_mpi_sys_mmap_cached 和 memcpy 将捕获的图像数据复制到之前分配的内存块中；
+    b. Copy the captured image data to the previously allocated memory block via kd_mpi_sys_mmap_cached and memcpy;
   
-    c. 清空 results 向量， 调用 cls 的预处理方法、推理方法和后处理方法，对图像进行分类；
+    c. Clear the results vector, call the cls preprocessing method, inference method, and postprocessing method to classify the image;
   
-    d. 利用分类结果，在 OSD 图像上绘制分类信息;
+    d. Use the classification results to draw classification information on the OSD image;
   
-    e. 使用 memcpy 将 OSD 图像数据复制到之前分配的 OSD 数据块中;
+    e. Use memcpy to copy the OSD image data to the previously allocated OSD data block;
   
-    f. 通过 kd_mpi_vo_chn_insert_frame 将 OSD 图像插入到显示通道;
+    f. Insert the OSD image to the display channel via kd_mpi_vo_chn_insert_frame;
   
-    g. 通过 kd_mpi_vicap_dump_release 释放之前捕获的图像。
+    g. Release the previously captured image via kd_mpi_vicap_dump_release.
 
-- 循环结束后，释放 OSD 相关的资源，通过 vo_osd_release_block() 和 vivcap_stop() 函数;
+- After the loop ends, release OSD-related resources via vo_osd_release_block() and vivcap_stop() functions;
 
-- 使用 kd_mpi_sys_mmz_free 释放之前分配的内存块。
+- Use kd_mpi_sys_mmz_free to release the previously allocated memory block.
 
-通过上述代码实现图像分类任务的视频流推理。
+Through the above code, video stream inference for image classification tasks is implemented.
 
-#### 代码流程图
+#### Code Flowchart
 
 <img src="./resource/pipe_code.png" alt="pipe_code.png" style="zoom:80%;" />
 
-#### 编译文件
+#### Compilation Files
 
 ##### k230_code/k230_deploy/CMakeLists.txt
 
-配置编译文件，并配置使用的头文件路径和链接库。
+Configure the compilation file, and configure the header file paths and link libraries to be used.
 
 ```cmake
 set(src main.cc utils.cc ai_base.cc classification.cc)
@@ -861,38 +861,38 @@ if [ -f out/bin/main.elf ]; then
 fi
 ```
 
-### AI代码编译
+### AI Code Compilation
 
-将项目中的k230_code文件夹拷贝到k230_sdk目录下的src/big/nncase下，执行编译脚本，将C++代码编译成main.elf可执行文件。如果编译可以在CANMV-K230开发板执行的elf文件：
+Copy the k230_code folder from the project to src/big/nncase under the k230_sdk directory, execute the compilation script, and compile the C++ code into a main.elf executable file. If compiling an elf file that can be executed on the CANMV-K230 development board:
 
 ```shell
-# 在k230_SDK目录下执行下述命令用于切换到CanMV开发板
+# Execute the following command in the k230_SDK directory to switch to the CanMV development board
 make CONF=k230_canmv_defconfig prepare_memory
-# 回到当前项目目录下
+# Return to the current project directory
 ./build_app.sh
 ```
 
-若权限不够，可使用如下代码赋予相关权限：
+If there are insufficient permissions, you can use the following code to grant relevant permissions:
 
 ```shell
 chmod +x build_app.sh
 ./build_app.sh
 ```
 
-如果编译01Studio开发板，切换开发板，编译代码：
+If compiling for the 01Studio development board, switch the development board and compile the code:
 
 ```shell
-# 在k230_SDK目录下执行下述命令用于切换到01Studio开发板
+# Execute the following command in the k230_SDK directory to switch to the 01Studio development board
 make CONF=k230_canmv_01studio_defconfig prepare_memory
-# 回到当前项目目录下
+# Return to the current project directory
 ./build_app.sh
 ```
 
-01Studio开发板默认编译`LCD`显示模式，如果想编译`HDMI`显示模式，将`k230_code/CMakeList.txt`中的`add_definitions(-DSTUDIO_HDMI)` 注释打开，然后再进行编译。
+The 01Studio development board defaults to compiling in `LCD` display mode. If you want to compile in `HDMI` display mode, uncomment the `add_definitions(-DSTUDIO_HDMI)` in `k230_code/CMakeList.txt`, and then recompile.
 
-### 文件拷贝
+### File Transfer
 
-按照上文第4节配置好文件传输，在MobaXterm上的小核界面进入/sharefs，将训练得到的checkpoints文件夹下kmodel文件、gen文件夹下labels.txt文件的和编译得到的main.elf文件拷贝到开发板的sharefs目录下新建的项目文件夹test_cls下。同时拷贝一张待推理的图片。
+Following the file transfer configuration in section 4 above, on the little-core interface of MobaXterm, enter /sharefs, copy the kmodel file from the checkpoints folder obtained from training, the labels.txt file from the gen folder, and the compiled main.elf file to a newly created project folder test_cls in the sharefs directory of the development board. Also copy an image to be inferred.
 
 ```shell
 test_cls
@@ -902,46 +902,46 @@ test_cls
 ├──001.jpg
 ```
 
-### 模型板上运行
+### Model On-Board Execution
 
-在大核COM口界面执行main.elf实现蔬菜分类。
-如进行静态图推理，执行下述代码(注意：代码需在大核下执行，文件拷贝需在小核下完成)：
+Execute main.elf on the big-core COM port interface to implement image classification.
+For static image inference, execute the following code (Note: the code needs to be executed on the big-core, file copying needs to be done on the little-core):
 
 ```shell
-# "模型推理时传参说明："
+# Model inference parameter explanation:
 # "<kmodel_path> <image_path> <labels_txt> <debug_mode>"
-# "Options:"
-# "  kmodel_path     Kmodel的路径\n"
-# "  image_path      待推理图片路径/摄像头(None)\n"
-# "  labels_txt      类别标签文件路径\n"
-# "  debug_mode      是否需要调试，0、1、2分别表示不调试、简单调试、详细调试\n"
+# Options:
+# "  kmodel_path     Path to the Kmodel\n"
+# "  image_path      Image path for inference or camera (None)\n"
+# "  labels_txt      Path to category label file\n"
+# "  debug_mode      Whether to debug, 0, 1, 2 represent no debug, simple debug, detailed debug respectively\n"
 main.elf best.kmodel 001.jpg labels.txt 2 
 ```
 
-如执行摄像头视频流推理，执行下述代码：
+For camera video stream inference, execute the following code:
 
 ```shell
 main.elf best.kmodel None labels.txt 2 
 ```
 
-### 上板部署效果
+### On-Board Deployment Results
 
 <img src="./resource/result.png" alt="image.png" style="zoom:50%;" />
 
-## 工具
+## Tools
 
-烧录工具the balena Etcher: [https://etcher.balena.io/](https://etcher.balena.io/)
+Flash tool balena Etcher: [https://etcher.balena.io/](https://etcher.balena.io/)
 
-局域网文件传输工具Tftpd64：[https://bitbucket.org/phjounin/tftpd64/downloads/](https://bitbucket.org/phjounin/tftpd64/downloads/)
+Local network file transfer tool Tftpd64: [https://bitbucket.org/phjounin/tftpd64/downloads/](https://bitbucket.org/phjounin/tftpd64/downloads/)
 
-MobaXterm下载地址：[https://mobaxterm.mobatek.net/download.html](https://mobaxterm.mobatek.net/download.html)
+MobaXterm download: [https://mobaxterm.mobatek.net/download.html](https://mobaxterm.mobatek.net/download.html)
 
-## 参考
+## References
 
-k230_sdk github：[https://github.com/kendryte/k230_sdk](https://github.com/kendryte/k230_sdk)
+k230_sdk github: [https://github.com/kendryte/k230_sdk](https://github.com/kendryte/k230_sdk)
 
-k230_sdk_doc github: [k230 sdk 使用说明](https://github.com/kendryte/k230_docs/blob/main/zh/01_software/board/K230_SDK_%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md)
+k230_sdk_doc github: [k230 sdk usage guide](https://github.com/kendryte/k230_docs/blob/main/zh/01_software/board/K230_SDK_%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md)
 
-k230_sdk gitee: [https://gitee.com/kendryte/k230_sdk](https://gitee.com/kendryte/k230_sdk)c
+k230_sdk gitee: [https://gitee.com/kendryte/k230_sdk](https://gitee.com/kendryte/k230_sdk)
 
 nncase github: [kendryte/nncase: Open deep learning compiler stack for Kendryte AI accelerator (github.com)](https://github.com/kendryte/nncase)
