@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(python3:*)",
-      "Bash(python main.py:*)"
+      "Bash(python main.py:*)",
+      "Bash(pip show:*)",
+      "Bash(NNCASE_PLUGIN_PATH=\"/opt/miniconda3/envs/ml/lib/python3.11/site-packages/nncase\" python3:*)",
+      "Bash(export NNCASE_PLUGIN_PATH=/opt/miniconda3/envs/ml/lib/python3.11/site-packages)",
+      "Bash(export PATH=$PATH:/opt/miniconda3/envs/ml/lib/python3.11/site-packages)",
+      "Bash(pip index:*)"
     ],
     "deny": [],
     "ask": []

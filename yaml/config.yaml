@@ -5,6 +5,17 @@ dataset:
   val_ratio: 0.2 # 验证集比例 (combined validation + test)
   test_ratio: 0.0 # 不使用单独的测试集
 
+pretrain:
+  root_folder: ../data/garbage-classification-2class # 预训练数据集路径
+  split: true # 是否重新执行拆分
+  train_ratio: 0.9 # 预训练训练集比例
+  val_ratio: 0.1 # 预训练验证集比例
+  test_ratio: 0.0 # 不使用单独的测试集
+  txt_path: ../gen/pretrain # 预训练拆分文件路径
+  epochs: 30 # 预训练轮数
+  learningrate: 0.001 # 预训练学习率 (higher than fine-tuning)
+  save_path: ../checkpoints/pretrain # 预训练模型保存路径
+
 train:
   device: mps
   txt_path: ../gen # 拆分过程生成的训练集、验证集、测试集txt文件，标签名称文件、校正集文件
@@ -15,6 +26,8 @@ train:
   batchsize: 8
   learningrate: 0.0001
   save_path: ../checkpoints # 模型保存路径
+  use_pretrained: true # 是否使用预训练权重
+  pretrained_weights: ../checkpoints/pretrain/pretrain_best.pth # 预训练权重路径
 
 inference:
   mode: image # 推理模式，分为image和video; image模式下可推理单张图片和目录下所有图片，video调用摄像头实现推理

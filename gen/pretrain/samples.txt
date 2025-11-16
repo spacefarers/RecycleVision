@@ -1,0 +1,2 @@
+../data/garbage-classification-2class/recyclable/val_plastic_plastic394.jpg
+../data/garbage-classification-2class/trash/train_trash_trash120.jpg

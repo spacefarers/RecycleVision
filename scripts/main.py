@@ -33,6 +33,8 @@ def pipeline(config):
     batchsize = train_config.get("batchsize", 8)
     learningrate = train_config.get("learningrate", 0.001)
     save_path = train_config.get("save_path", '../checkpoints')
+    use_pretrained = train_config.get("use_pretrained", False)
+    pretrained_weights = train_config.get("pretrained_weights", '../checkpoints/pretrain/pretrain_best.pth')
 
     deploy_config = config.get("deploy", {})
     chip = deploy_config.get("chip", 'k230')
@@ -102,13 +104,39 @@ def pipeline(config):
 
     # init model
     model = resnet18(weights=None)
+
+    # Load pretrained weights if specified
+    if use_pretrained and os.path.exists(pretrained_weights):
+        print(f"\n{'='*60}")
+        print(f"Loading pretrained weights from {pretrained_weights}")
+
+        # Load pretrained state dict
+        pretrained_state = torch.load(pretrained_weights, map_location=device)
+
+        # Get current model state dict
+        model_state = model.state_dict()
+
+        # Filter out the final FC layer (which may have different dimensions)
+        pretrained_state_filtered = {k: v for k, v in pretrained_state.items()
+                                     if k in model_state and 'fc' not in k}
+
+        # Load the filtered weights (all layers except FC)
+        model_state.update(pretrained_state_filtered)
+        model.load_state_dict(model_state)
+
+        print(f"Loaded {len(pretrained_state_filtered)} layers from pretrained model")
+        print(f"Skipped FC layer (will be randomly initialized for {num_classes} classes)")
+        print(f"{'='*60}\n")
+    elif use_pretrained:
+        print(f"Warning: Pretrained weights not found at {pretrained_weights}, training from scratch")
+
     # Modify the final fully connected layer for the correct number of classes
     model.fc = nn.Linear(model.fc.in_features, num_classes)
     model.to(device)
     # set criterion and optimizer
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=learningrate)  # 使用Adam优化器
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=5, verbose=True)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=5)
     val_acc = 0.0
     patience_counter = 0
     patience_limit = 10  # Early stopping after 10 epochs without improvement

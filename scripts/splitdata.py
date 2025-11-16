@@ -5,7 +5,6 @@ from PIL import Image
 
 def split_dataset(root_folder, train_ratio, val_ratio, test_ratio, txt_path):
     assert train_ratio + val_ratio + test_ratio == 1.0, "Ratios should sum up to 1.0"
-
     class_names = sorted(os.listdir(root_folder))
     train_file = open(os.path.join(txt_path, "train.txt"), "w")
     val_file = open(os.path.join(txt_path, "val.txt"), "w")
