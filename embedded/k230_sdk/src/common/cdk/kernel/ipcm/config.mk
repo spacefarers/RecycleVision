@@ -1,0 +1,12 @@
+export __PLATFORM__=k230
+export LOCAL_ID=0
+export ARCH_TYPE="riscv"
+export NODE_NAME="c908"
+export OS_TYPE="linux"
+export CDEV=y
+export SHAREFS=y
+export CFG_COMPILE=riscv64-unknown-linux-gnu-
+export IPCM_CFLAGS=
+export IPCM_LDFLAGS=
+export KERNEL_DIR=/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/linux
+export VIRT_TTY_ROLE = "server"

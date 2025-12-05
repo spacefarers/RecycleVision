@@ -6,22 +6,20 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torchvision.transforms as transforms
-from torch.utils.data import DataLoader, WeightedRandomSampler
+from torch.utils.data import DataLoader
 from torchvision.models import resnet18
 from scripts.dataset import CustomDataset
 from scripts import splitdata
 from scripts.to_kmodel import to_kmodel
 from utils.read_yaml import read_yaml
-from collections import Counter
 
 
 def pipeline(config):
     dataset_config = config.get("dataset", {})
     root_folder = dataset_config.get("root_folder")
     split = dataset_config.get("split", True)
-    train_ratio = dataset_config.get("train_ratio", 0.7)
-    val_ratio = dataset_config.get("val_ratio", 0.15)
-    test_ratio = dataset_config.get("test_ratio", 0.15)
+    train_ratio = dataset_config.get("train_ratio", 0.8)
+    val_ratio = dataset_config.get("val_ratio", 0.2)
 
     train_config = config.get("train", {})
     device = train_config.get("device", "cpu")
@@ -33,8 +31,6 @@ def pipeline(config):
     batchsize = train_config.get("batchsize", 8)
     learningrate = train_config.get("learningrate", 0.001)
     save_path = train_config.get("save_path", '../checkpoints')
-    use_pretrained = train_config.get("use_pretrained", False)
-    pretrained_weights = train_config.get("pretrained_weights", '../checkpoints/pretrain/pretrain_best.pth')
 
     deploy_config = config.get("deploy", {})
     chip = deploy_config.get("chip", 'k230')
@@ -46,7 +42,7 @@ def pipeline(config):
         os.mkdir(save_path)
 
     if split:
-        splitdata.split_dataset(root_folder, train_ratio, val_ratio, test_ratio, txt_path)
+        splitdata.split_dataset(root_folder, train_ratio, val_ratio, txt_path)
     train_txt = os.path.join(txt_path, "train.txt")
     val_txt = os.path.join(txt_path, "val.txt")
     samples_txt = os.path.join(txt_path, "samples.txt")
@@ -54,18 +50,26 @@ def pipeline(config):
 
     # Data preprocessing with augmentation for training
     train_transform = transforms.Compose([
-        transforms.RandomHorizontalFlip(p=0.5),
-        transforms.RandomVerticalFlip(p=0.3),
-        transforms.RandomRotation(degrees=15),
-        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
-        transforms.RandomAffine(degrees=0, translate=(0.1, 0.1)),
-        transforms.GaussianBlur(kernel_size=3, sigma=(0.1, 2.0)),
-        transforms.Resize(image_size),
+        transforms.Resize((int(image_size[0] * 1.1), int(image_size[1] * 1.1))),  # Slightly larger for cropping
+        transforms.RandomCrop(image_size),  # Random crop to target size
+        transforms.RandomHorizontalFlip(p=0.5),  # Random horizontal flip
+        transforms.RandomRotation(degrees=15),  # Random rotation up to 15 degrees
+        transforms.ColorJitter(
+            brightness=0.2,  # Random brightness adjustment
+            contrast=0.2,    # Random contrast adjustment
+            saturation=0.2,  # Random saturation adjustment
+            hue=0.1          # Random hue adjustment
+        ),
+        transforms.RandomAffine(
+            degrees=0,
+            translate=(0.1, 0.1),  # Random translation
+            scale=(0.9, 1.1)       # Random scaling
+        ),
         transforms.ToTensor(),
         transforms.Normalize(mean=mean, std=std)
     ])
 
-    # Minimal transforms for validation and testing
+    # Validation transform without augmentation
     val_transform = transforms.Compose([
         transforms.Resize(image_size),
         transforms.ToTensor(),
@@ -76,22 +80,9 @@ def pipeline(config):
     train_dataset = CustomDataset(txt_file=train_txt, root_folder=root_folder, transform=train_transform)
     val_dataset = CustomDataset(txt_file=val_txt, root_folder=root_folder, transform=val_transform)
 
-    # Calculate class weights for balanced sampling
-    train_labels = [label for _, label in train_dataset.data]
-    class_counts = Counter(train_labels)
-    print(f"Class distribution in training set: {dict(class_counts)}")
-
-    # Calculate weights for each sample (inverse of class frequency)
-    total_samples = len(train_labels)
-    class_weights = {class_idx: total_samples / count for class_idx, count in class_counts.items()}
-    sample_weights = [class_weights[label] for label in train_labels]
-
-    # Create WeightedRandomSampler for balanced training
-    sampler = WeightedRandomSampler(sample_weights, num_samples=total_samples, replacement=True)
-
     # init dataloader
-    train_loader = DataLoader(train_dataset, batch_size=batchsize, sampler=sampler, num_workers=0)
-    val_loader = DataLoader(val_dataset, batch_size=batchsize, shuffle=False, num_workers=0)  # 将num_workers设置为0
+    train_loader = DataLoader(train_dataset, batch_size=batchsize, shuffle=True, num_workers=0)
+    val_loader = DataLoader(val_dataset, batch_size=batchsize, shuffle=False, num_workers=0)
 
     # get class_names
     class_names = []
@@ -104,42 +95,14 @@ def pipeline(config):
 
     # init model
     model = resnet18(weights=None)
-
-    # Load pretrained weights if specified
-    if use_pretrained and os.path.exists(pretrained_weights):
-        print(f"\n{'='*60}")
-        print(f"Loading pretrained weights from {pretrained_weights}")
-
-        # Load pretrained state dict
-        pretrained_state = torch.load(pretrained_weights, map_location=device)
-
-        # Get current model state dict
-        model_state = model.state_dict()
-
-        # Filter out the final FC layer (which may have different dimensions)
-        pretrained_state_filtered = {k: v for k, v in pretrained_state.items()
-                                     if k in model_state and 'fc' not in k}
-
-        # Load the filtered weights (all layers except FC)
-        model_state.update(pretrained_state_filtered)
-        model.load_state_dict(model_state)
-
-        print(f"Loaded {len(pretrained_state_filtered)} layers from pretrained model")
-        print(f"Skipped FC layer (will be randomly initialized for {num_classes} classes)")
-        print(f"{'='*60}\n")
-    elif use_pretrained:
-        print(f"Warning: Pretrained weights not found at {pretrained_weights}, training from scratch")
-
     # Modify the final fully connected layer for the correct number of classes
     model.fc = nn.Linear(model.fc.in_features, num_classes)
     model.to(device)
     # set criterion and optimizer
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=learningrate)  # 使用Adam优化器
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=5)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=5, verbose=True)
     val_acc = 0.0
-    patience_counter = 0
-    patience_limit = 10  # Early stopping after 10 epochs without improvement
 
     for epoch in range(epochs):
         model.train()
@@ -170,27 +133,19 @@ def pipeline(config):
                 correct_predictions += (predicted == labels).sum().item()
                 total_samples += labels.size(0)
         val_accuracy = correct_predictions / total_samples
-        scheduler.step(val_accuracy)
         if val_accuracy > val_acc:
-            val_acc = val_accuracy
-            patience_counter = 0
             torch.save(model.state_dict(), os.path.join(save_path, "best.pth"))
-        else:
-            patience_counter += 1
         print(f"Epoch {epoch + 1}, Validation Accuracy: {val_accuracy:.3f}")
-        if patience_counter >= patience_limit:
-            print(f"Early stopping triggered after {epoch + 1} epochs (no improvement for {patience_limit} epochs)")
-            break
     print("Finished Training")
     # save model
     torch.save(model.state_dict(), os.path.join(save_path, "last.pth"))
     print(f"Model saved to {save_path}")
 
     model.load_state_dict(torch.load(os.path.join(save_path, "best.pth")))
-    # Evaluate on validation set (combined val + test)
+    # evaluate on validation set
     model.eval()
-    val_accuracy = test_model(model, val_loader, device)
-    print(f"Validation Accuracy (combined val+test): {val_accuracy:.3f}")
+    val_accuracy_final = test_model(model, val_loader, device)
+    print(f"Final Validation Accuracy: {val_accuracy_final:.3f}")
 
     onnx_path = os.path.join(save_path, "best.onnx")
     kmodel_path = os.path.join(save_path, "best.kmodel")

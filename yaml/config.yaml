@@ -2,8 +2,7 @@ dataset:
   root_folder: ../data/sorted_2_class #分类数据集路径
   split: true # 是否重新执行拆分，第一次执行必须为true
   train_ratio: 0.8 # 训练集比例
-  val_ratio: 0.2 # 验证集比例 (combined validation + test)
-  test_ratio: 0.0 # 不使用单独的测试集
+  val_ratio: 0.2 # 验证集比例
 
 pretrain:
   root_folder: ../data/garbage-classification-2class # 预训练数据集路径
@@ -22,17 +21,17 @@ train:
   image_size: [ 224,224 ] # 分辨率
   mean: [ 0.485, 0.456, 0.406 ]
   std: [ 0.229, 0.224, 0.225 ]
-  epochs: 50
-  batchsize: 8
+  epochs: 100
+  batchsize: 4
   learningrate: 0.0001
   save_path: ../checkpoints # 模型保存路径
   use_pretrained: true # 是否使用预训练权重
   pretrained_weights: ../checkpoints/pretrain/pretrain_best.pth # 预训练权重路径
 
 inference:
-  mode: image # 推理模式，分为image和video; image模式下可推理单张图片和目录下所有图片，video调用摄像头实现推理
+  mode: video # 推理模式，分为image和video; image模式下可推理单张图片和目录下所有图片，video调用摄像头实现推理
   inference_model: best # 分为best和last，分别调用checkpoints下的best.pth和last.pth进行推理
-  images_path: ../data/sorted_2_class # 如果该路径为图片路径，则进行单张图片推理；如果该路径为目录，则对目录下所有图片进行推理
+  images_path: /Users/spacefarers/work/screenshots/SCR-20251102-szqc.png # 如果该路径为图片路径，则进行单张图片推理；如果该路径为目录，则对目录下所有图片进行推理
 
 deploy:
   chip: k230 # 芯片类型，分为“k230”和“cpu”两种

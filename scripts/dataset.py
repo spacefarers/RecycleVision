@@ -27,10 +27,7 @@ class CustomDataset(Dataset):
         data = []
         with open(self.txt_file, "r") as file:
             for line in file:
-                parts = line.strip().rsplit(' ', 1)  # Split from the right, max 1 split
-                if len(parts) != 2:
-                    continue  # Skip malformed lines
-                img_name, label = parts
+                img_name, label = line.strip().rsplit(maxsplit=1)
                 label = int(label)
                 data.append((img_name, label))
         return data

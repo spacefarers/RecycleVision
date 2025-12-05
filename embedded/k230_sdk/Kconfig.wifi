@@ -1,0 +1,24 @@
+
+
+menu "wifi configurations"
+config AP6212A
+        bool "enable ap6212a"
+        default n
+
+config AP6256
+        bool "enable ap6256"
+        default n
+
+config RTL8188FU
+        bool "enable rtl8188fu"
+        default n
+
+config RTL8723DU
+        bool "enable rtl8723du"
+        default n
+
+config AIC_8800
+        bool "enable aic8800 driver"
+        default n
+
+endmenu

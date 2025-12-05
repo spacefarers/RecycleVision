@@ -1,0 +1,39 @@
+/* Copyright (c) 2023, Canaan Bright Sight Co., Ltd
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+*/
+
+#include <dt-bindings/reset/canaan-k230-reset.h>
+
+/* Please call device_reset(&platform_device->device) api to reset device */
+&gpu {
+   resets = <&sysctl_reset SYSCTL_RESET_GPU>;
+   reset-names = "vglite";
+};
+
+&i2c0 {
+    resets = <&sysctl_reset SYSCTL_RESET_I2C0>;
+    reset-names = "i2c0";
+};
+
+&i2c1 {
+    resets = <&sysctl_reset SYSCTL_RESET_I2C1>;
+    reset-names = "i2c1";
+};
+
+&i2c2 {
+    resets = <&sysctl_reset SYSCTL_RESET_I2C2>;
+    reset-names = "i2c2";
+};
+
+&i2c3 {
+    resets = <&sysctl_reset SYSCTL_RESET_I2C3>;
+    reset-names = "i2c3";
+};
+
+&i2c4 {
+    resets = <&sysctl_reset SYSCTL_RESET_I2C4>;
+    reset-names = "i2c4";
+};

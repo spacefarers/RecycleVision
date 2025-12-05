@@ -1,0 +1,8 @@
+import os
+import sys
+
+# add building.py path
+sys.path = sys.path + [os.path.join('..','..','..','rt-smart','tools')]
+from building import *
+
+BuildApplication('rvv_demo_for_rtt', 'SConscript', usr_root = '../../../rt-smart/userapps')

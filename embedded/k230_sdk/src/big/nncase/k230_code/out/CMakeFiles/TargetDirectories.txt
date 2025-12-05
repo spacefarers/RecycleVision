@@ -1,0 +1,13 @@
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/edit_cache.dir
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/rebuild_cache.dir
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/list_install_components.dir
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/install.dir
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/install/local.dir
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/install/strip.dir
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/k230_deploy/CMakeFiles/main.elf.dir
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/k230_deploy/CMakeFiles/edit_cache.dir
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/k230_deploy/CMakeFiles/rebuild_cache.dir
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/k230_deploy/CMakeFiles/list_install_components.dir
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/k230_deploy/CMakeFiles/install.dir
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/k230_deploy/CMakeFiles/install/local.dir
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/k230_deploy/CMakeFiles/install/strip.dir

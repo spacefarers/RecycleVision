@@ -1,0 +1,511 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeDetermineSystem.cmake:200 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The target system is: Generic -  - riscv64
+      The host system is: Linux - 6.10.14-linuxkit - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-gcc 
+      Build flags: -march=rv64imafdcv;-mabi=lp64d;-mcmodel=medany;-march=rv64imafdcv;-mabi=lp64d;-mcmodel=medany
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is GNU, found in:
+        /Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/3.30.2/CompilerIdC/a.out
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-g++ 
+      Build flags: -fopenmp;-march=rv64imafdcv;-mabi=lp64d;-mcmodel=medany;-fopenmp;-march=rv64imafdcv;-mabi=lp64d;-mcmodel=medany
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is GNU, found in:
+        /Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/3.30.2/CompilerIdCXX/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-Xupeva"
+      binary: "/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-Xupeva"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -march=rv64imafdcv -mabi=lp64d -mcmodel=medany"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-Xupeva'
+        
+        Run Build Command(s): /usr/local/lib/python3.8/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_e91ca/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_e91ca.dir/build.make CMakeFiles/cmTC_e91ca.dir/build
+        make[1]: Entering directory '/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-Xupeva'
+        Building C object CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj
+        /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-gcc   -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -march=rv64imafdcv -mabi=lp64d -mcmodel=medany    -v -o CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj -c /usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-gcc
+        Target: riscv64-unknown-linux-musl
+        Configured with: /builds/canaan-creative/riscv-toolchain/gcc/configure --target=riscv64-unknown-linux-musl --prefix=/builds/canaan-creative/riscv-toolchain/install-native/ --with-sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl --with-system-zlib --enable-shared --enable-tls --enable-languages=c,c++,fortran --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libsanitizer --disable-nls --disable-bootstrap --src=/builds/canaan-creative/riscv-toolchain/gcc --disable-multilib --with-abi=lp64d --with-arch=rv64imafdcv --with-tune=rocket 'CFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d' 'CXXFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d'
+        Thread model: posix
+        Supported LTO compression algorithms: zlib
+        gcc version 12.0.1 20220505 (prerelease) (GCC) 
+        COLLECT_GCC_OPTIONS='-mcmodel=medany' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-dumpdir' 'CMakeFiles/cmTC_e91ca.dir/'
+         /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/cc1 -quiet -v -iprefix /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/ /usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_e91ca.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcmodel=medany -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -mtune=rocket -misa-spec=20191213 -march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b -version -o /tmp/cc634KvI.s
+        GNU C17 (GCC) version 12.0.1 20220505 (prerelease) (riscv64-unknown-linux-musl)
+        	compiled by GNU C version 9.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl/usr/local/include"
+        ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include"
+        ignoring nonexistent directory "/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl/usr/include"
+        ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include
+         /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/include
+        End of search list.
+        GNU C17 (GCC) version 12.0.1 20220505 (prerelease) (riscv64-unknown-linux-musl)
+        	compiled by GNU C version 9.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        Compiler executable checksum: 3f69e773161d85594256b016a7c76253
+        COLLECT_GCC_OPTIONS='-mcmodel=medany' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-dumpdir' 'CMakeFiles/cmTC_e91ca.dir/'
+         /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/bin/as -v --traditional-format -march=rv64imafdcv -march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj /tmp/cc634KvI.s
+        GNU assembler version 2.39 (riscv64-unknown-linux-musl) using BFD version (GNU Binutils) 2.39
+        COMPILER_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/bin/
+        LIBRARY_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/
+        COLLECT_GCC_OPTIONS='-mcmodel=medany' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-dumpdir' 'CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_e91ca
+        /usr/local/lib/python3.8/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e91ca.dir/link.txt --verbose=1
+        /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-gcc  -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -march=rv64imafdcv -mabi=lp64d -mcmodel=medany   -v CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj -o cmTC_e91ca
+        Using built-in specs.
+        COLLECT_GCC=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-gcc
+        COLLECT_LTO_WRAPPER=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/lto-wrapper
+        Target: riscv64-unknown-linux-musl
+        Configured with: /builds/canaan-creative/riscv-toolchain/gcc/configure --target=riscv64-unknown-linux-musl --prefix=/builds/canaan-creative/riscv-toolchain/install-native/ --with-sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl --with-system-zlib --enable-shared --enable-tls --enable-languages=c,c++,fortran --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libsanitizer --disable-nls --disable-bootstrap --src=/builds/canaan-creative/riscv-toolchain/gcc --disable-multilib --with-abi=lp64d --with-arch=rv64imafdcv --with-tune=rocket 'CFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d' 'CXXFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d'
+        Thread model: posix
+        Supported LTO compression algorithms: zlib
+        gcc version 12.0.1 20220505 (prerelease) (GCC) 
+        COMPILER_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/bin/
+        LIBRARY_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/
+        COLLECT_GCC_OPTIONS='-mcmodel=medany' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'cmTC_e91ca' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-dumpdir' 'cmTC_e91ca.'
+         /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/collect2 -plugin /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/liblto_plugin.so -plugin-opt=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cczz2Sz9.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl --eh-frame-hdr -melf64lriscv -dynamic-linker /lib/ld-musl-riscv64.so.1 -o cmTC_e91ca /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/crt1.o /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o -L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1 -L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc -L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o
+        COLLECT_GCC_OPTIONS='-mcmodel=medany' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'cmTC_e91ca' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-dumpdir' 'cmTC_e91ca.'
+        make[1]: Leaving directory '/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-Xupeva'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include]
+          add: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/include]
+        end of search list found
+        collapse include dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/include]
+        collapse include dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/include] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/include]
+        implicit include dirs: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/include;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: '/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-Xupeva']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/local/lib/python3.8/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_e91ca/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_e91ca.dir/build.make CMakeFiles/cmTC_e91ca.dir/build]
+        ignore line: [make[1]: Entering directory '/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-Xupeva']
+        ignore line: [Building C object CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj]
+        ignore line: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-gcc   -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -march=rv64imafdcv -mabi=lp64d -mcmodel=medany    -v -o CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj -c /usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-gcc]
+        ignore line: [Target: riscv64-unknown-linux-musl]
+        ignore line: [Configured with: /builds/canaan-creative/riscv-toolchain/gcc/configure --target=riscv64-unknown-linux-musl --prefix=/builds/canaan-creative/riscv-toolchain/install-native/ --with-sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl --with-system-zlib --enable-shared --enable-tls --enable-languages=c c++ fortran --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libsanitizer --disable-nls --disable-bootstrap --src=/builds/canaan-creative/riscv-toolchain/gcc --disable-multilib --with-abi=lp64d --with-arch=rv64imafdcv --with-tune=rocket 'CFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d' 'CXXFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d']
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 12.0.1 20220505 (prerelease) (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcmodel=medany' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-dumpdir' 'CMakeFiles/cmTC_e91ca.dir/']
+        ignore line: [ /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/cc1 -quiet -v -iprefix /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/ /usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_e91ca.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcmodel=medany -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -mtune=rocket -misa-spec=20191213 -march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b -version -o /tmp/cc634KvI.s]
+        ignore line: [GNU C17 (GCC) version 12.0.1 20220505 (prerelease) (riscv64-unknown-linux-musl)]
+        ignore line: [	compiled by GNU C version 9.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl/usr/local/include"]
+        ignore line: [ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include"]
+        ignore line: [ignoring nonexistent directory "/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl/usr/include"]
+        ignore line: [ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include]
+        ignore line: [ /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/include]
+        ignore line: [End of search list.]
+        ignore line: [GNU C17 (GCC) version 12.0.1 20220505 (prerelease) (riscv64-unknown-linux-musl)]
+        ignore line: [	compiled by GNU C version 9.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [Compiler executable checksum: 3f69e773161d85594256b016a7c76253]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcmodel=medany' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-dumpdir' 'CMakeFiles/cmTC_e91ca.dir/']
+        ignore line: [ /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/bin/as -v --traditional-format -march=rv64imafdcv -march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj /tmp/cc634KvI.s]
+        ignore line: [GNU assembler version 2.39 (riscv64-unknown-linux-musl) using BFD version (GNU Binutils) 2.39]
+        ignore line: [COMPILER_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/bin/]
+        ignore line: [LIBRARY_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcmodel=medany' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-dumpdir' 'CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_e91ca]
+        ignore line: [/usr/local/lib/python3.8/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e91ca.dir/link.txt --verbose=1]
+        ignore line: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-gcc  -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -march=rv64imafdcv -mabi=lp64d -mcmodel=medany   -v CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj -o cmTC_e91ca]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-gcc]
+        ignore line: [COLLECT_LTO_WRAPPER=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/lto-wrapper]
+        ignore line: [Target: riscv64-unknown-linux-musl]
+        ignore line: [Configured with: /builds/canaan-creative/riscv-toolchain/gcc/configure --target=riscv64-unknown-linux-musl --prefix=/builds/canaan-creative/riscv-toolchain/install-native/ --with-sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl --with-system-zlib --enable-shared --enable-tls --enable-languages=c c++ fortran --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libsanitizer --disable-nls --disable-bootstrap --src=/builds/canaan-creative/riscv-toolchain/gcc --disable-multilib --with-abi=lp64d --with-arch=rv64imafdcv --with-tune=rocket 'CFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d' 'CXXFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d']
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 12.0.1 20220505 (prerelease) (GCC) ]
+        ignore line: [COMPILER_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/bin/]
+        ignore line: [LIBRARY_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcmodel=medany' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'cmTC_e91ca' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-dumpdir' 'cmTC_e91ca.']
+        link line: [ /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/collect2 -plugin /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/liblto_plugin.so -plugin-opt=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cczz2Sz9.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl --eh-frame-hdr -melf64lriscv -dynamic-linker /lib/ld-musl-riscv64.so.1 -o cmTC_e91ca /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/crt1.o /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o -L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1 -L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc -L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o]
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cczz2Sz9.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [--sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-melf64lriscv] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib/ld-musl-riscv64.so.1] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_e91ca] ==> ignore
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/crt1.o] ==> obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/crt1.o]
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o] ==> obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o]
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o] ==> obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o]
+          arg [-L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1] ==> dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1]
+          arg [-L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc] ==> dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc]
+          arg [-L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib] ==> dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib]
+          arg [CMakeFiles/cmTC_e91ca.dir/CMakeCCompilerABI.c.obj] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o] ==> obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o]
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o] ==> obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcmodel=medany' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'cmTC_e91ca' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-dumpdir' 'cmTC_e91ca.']
+        ignore line: [make[1]: Leaving directory '/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-Xupeva']
+        ignore line: []
+        ignore line: []
+        collapse obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/crt1.o] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/lib/crt1.o]
+        collapse obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o]
+        collapse obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o]
+        collapse obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o]
+        collapse obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o]
+        collapse library dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1]
+        collapse library dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc]
+        collapse library dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/lib]
+        implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+        implicit objs: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/lib/crt1.o;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o]
+        implicit dirs: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-wcVjba"
+      binary: "/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-wcVjba"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fopenmp -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -fopenmp -march=rv64imafdcv -mabi=lp64d -mcmodel=medany"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-wcVjba'
+        
+        Run Build Command(s): /usr/local/lib/python3.8/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8b45a/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_8b45a.dir/build.make CMakeFiles/cmTC_8b45a.dir/build
+        make[1]: Entering directory '/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-wcVjba'
+        Building CXX object CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj
+        /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-g++   -fopenmp -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -fopenmp -march=rv64imafdcv -mabi=lp64d -mcmodel=medany    -v -o CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-g++
+        Target: riscv64-unknown-linux-musl
+        Configured with: /builds/canaan-creative/riscv-toolchain/gcc/configure --target=riscv64-unknown-linux-musl --prefix=/builds/canaan-creative/riscv-toolchain/install-native/ --with-sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl --with-system-zlib --enable-shared --enable-tls --enable-languages=c,c++,fortran --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libsanitizer --disable-nls --disable-bootstrap --src=/builds/canaan-creative/riscv-toolchain/gcc --disable-multilib --with-abi=lp64d --with-arch=rv64imafdcv --with-tune=rocket 'CFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d' 'CXXFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d'
+        Thread model: posix
+        Supported LTO compression algorithms: zlib
+        gcc version 12.0.1 20220505 (prerelease) (GCC) 
+        COLLECT_GCC_OPTIONS='-mcmodel=medany' '-fopenmp' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8b45a.dir/'
+         /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/cc1plus -quiet -v -iprefix /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/ -D_GNU_SOURCE -D_REENTRANT /usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_8b45a.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcmodel=medany -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -mtune=rocket -misa-spec=20191213 -march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b -version -fopenmp -o /tmp/cc3DtzZL.s
+        GNU C++17 (GCC) version 12.0.1 20220505 (prerelease) (riscv64-unknown-linux-musl)
+        	compiled by GNU C version 9.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1"
+        ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1/riscv64-unknown-linux-musl"
+        ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1/backward"
+        ignoring nonexistent directory "/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl/usr/local/include"
+        ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include"
+        ignoring nonexistent directory "/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl/usr/include"
+        ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1
+         /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1/riscv64-unknown-linux-musl
+         /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1/backward
+         /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include
+         /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/include
+        End of search list.
+        GNU C++17 (GCC) version 12.0.1 20220505 (prerelease) (riscv64-unknown-linux-musl)
+        	compiled by GNU C version 9.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        Compiler executable checksum: 2a7c4c9326bc576a073cebd355eeafab
+        COLLECT_GCC_OPTIONS='-mcmodel=medany' '-fopenmp' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8b45a.dir/'
+         /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/bin/as -v --traditional-format -march=rv64imafdcv -march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj /tmp/cc3DtzZL.s
+        GNU assembler version 2.39 (riscv64-unknown-linux-musl) using BFD version (GNU Binutils) 2.39
+        COMPILER_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/bin/
+        LIBRARY_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/
+        COLLECT_GCC_OPTIONS='-mcmodel=medany' '-fopenmp' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_8b45a
+        /usr/local/lib/python3.8/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8b45a.dir/link.txt --verbose=1
+        /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-g++  -fopenmp -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -fopenmp -march=rv64imafdcv -mabi=lp64d -mcmodel=medany   -v CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_8b45a
+        Using built-in specs.
+        COLLECT_GCC=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-g++
+        COLLECT_LTO_WRAPPER=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/lto-wrapper
+        Target: riscv64-unknown-linux-musl
+        Configured with: /builds/canaan-creative/riscv-toolchain/gcc/configure --target=riscv64-unknown-linux-musl --prefix=/builds/canaan-creative/riscv-toolchain/install-native/ --with-sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl --with-system-zlib --enable-shared --enable-tls --enable-languages=c,c++,fortran --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libsanitizer --disable-nls --disable-bootstrap --src=/builds/canaan-creative/riscv-toolchain/gcc --disable-multilib --with-abi=lp64d --with-arch=rv64imafdcv --with-tune=rocket 'CFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d' 'CXXFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d'
+        Thread model: posix
+        Supported LTO compression algorithms: zlib
+        gcc version 12.0.1 20220505 (prerelease) (GCC) 
+        COMPILER_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/bin/
+        LIBRARY_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/
+        Reading specs from /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/libgomp.spec
+        COLLECT_GCC_OPTIONS='-mcmodel=medany' '-fopenmp' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'cmTC_8b45a' '-shared-libgcc' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-pthread' '-dumpdir' 'cmTC_8b45a.'
+         /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/collect2 -plugin /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/liblto_plugin.so -plugin-opt=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccntqXYc.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-latomic -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl --eh-frame-hdr -melf64lriscv -dynamic-linker /lib/ld-musl-riscv64.so.1 -o cmTC_8b45a /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/crt1.o /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o -L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1 -L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc -L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc --push-state --as-needed -latomic --pop-state -lgcc_s -lgcc /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o
+        COLLECT_GCC_OPTIONS='-mcmodel=medany' '-fopenmp' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'cmTC_8b45a' '-shared-libgcc' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-pthread' '-dumpdir' 'cmTC_8b45a.'
+        make[1]: Leaving directory '/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-wcVjba'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1]
+          add: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1/riscv64-unknown-linux-musl]
+          add: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1/backward]
+          add: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include]
+          add: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/include]
+        end of search list found
+        collapse include dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/include/c++/12.0.1]
+        collapse include dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1/riscv64-unknown-linux-musl] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/include/c++/12.0.1/riscv64-unknown-linux-musl]
+        collapse include dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1/backward] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/include/c++/12.0.1/backward]
+        collapse include dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/include]
+        collapse include dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/include] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/include]
+        implicit include dirs: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/include/c++/12.0.1;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/include/c++/12.0.1/riscv64-unknown-linux-musl;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/include/c++/12.0.1/backward;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/include;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "/usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: '/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-wcVjba']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/local/lib/python3.8/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8b45a/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_8b45a.dir/build.make CMakeFiles/cmTC_8b45a.dir/build]
+        ignore line: [make[1]: Entering directory '/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-wcVjba']
+        ignore line: [Building CXX object CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj]
+        ignore line: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-g++   -fopenmp -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -fopenmp -march=rv64imafdcv -mabi=lp64d -mcmodel=medany    -v -o CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-g++]
+        ignore line: [Target: riscv64-unknown-linux-musl]
+        ignore line: [Configured with: /builds/canaan-creative/riscv-toolchain/gcc/configure --target=riscv64-unknown-linux-musl --prefix=/builds/canaan-creative/riscv-toolchain/install-native/ --with-sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl --with-system-zlib --enable-shared --enable-tls --enable-languages=c c++ fortran --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libsanitizer --disable-nls --disable-bootstrap --src=/builds/canaan-creative/riscv-toolchain/gcc --disable-multilib --with-abi=lp64d --with-arch=rv64imafdcv --with-tune=rocket 'CFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d' 'CXXFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d']
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 12.0.1 20220505 (prerelease) (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcmodel=medany' '-fopenmp' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8b45a.dir/']
+        ignore line: [ /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/cc1plus -quiet -v -iprefix /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/ -D_GNU_SOURCE -D_REENTRANT /usr/local/lib/python3.8/dist-packages/cmake/data/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_8b45a.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcmodel=medany -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -mtune=rocket -misa-spec=20191213 -march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b -version -fopenmp -o /tmp/cc3DtzZL.s]
+        ignore line: [GNU C++17 (GCC) version 12.0.1 20220505 (prerelease) (riscv64-unknown-linux-musl)]
+        ignore line: [	compiled by GNU C version 9.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1"]
+        ignore line: [ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1/riscv64-unknown-linux-musl"]
+        ignore line: [ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1/backward"]
+        ignore line: [ignoring nonexistent directory "/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl/usr/local/include"]
+        ignore line: [ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include"]
+        ignore line: [ignoring nonexistent directory "/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl/usr/include"]
+        ignore line: [ignoring duplicate directory "/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-linux-musl/12.0.1/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1]
+        ignore line: [ /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1/riscv64-unknown-linux-musl]
+        ignore line: [ /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include/c++/12.0.1/backward]
+        ignore line: [ /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/include]
+        ignore line: [ /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/include]
+        ignore line: [End of search list.]
+        ignore line: [GNU C++17 (GCC) version 12.0.1 20220505 (prerelease) (riscv64-unknown-linux-musl)]
+        ignore line: [	compiled by GNU C version 9.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [Compiler executable checksum: 2a7c4c9326bc576a073cebd355eeafab]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcmodel=medany' '-fopenmp' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8b45a.dir/']
+        ignore line: [ /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/bin/as -v --traditional-format -march=rv64imafdcv -march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj /tmp/cc3DtzZL.s]
+        ignore line: [GNU assembler version 2.39 (riscv64-unknown-linux-musl) using BFD version (GNU Binutils) 2.39]
+        ignore line: [COMPILER_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/bin/]
+        ignore line: [LIBRARY_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcmodel=medany' '-fopenmp' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_8b45a]
+        ignore line: [/usr/local/lib/python3.8/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8b45a.dir/link.txt --verbose=1]
+        ignore line: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-g++  -fopenmp -march=rv64imafdcv -mabi=lp64d -mcmodel=medany -fopenmp -march=rv64imafdcv -mabi=lp64d -mcmodel=medany   -v CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_8b45a]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-g++]
+        ignore line: [COLLECT_LTO_WRAPPER=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/lto-wrapper]
+        ignore line: [Target: riscv64-unknown-linux-musl]
+        ignore line: [Configured with: /builds/canaan-creative/riscv-toolchain/gcc/configure --target=riscv64-unknown-linux-musl --prefix=/builds/canaan-creative/riscv-toolchain/install-native/ --with-sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl --with-system-zlib --enable-shared --enable-tls --enable-languages=c c++ fortran --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libsanitizer --disable-nls --disable-bootstrap --src=/builds/canaan-creative/riscv-toolchain/gcc --disable-multilib --with-abi=lp64d --with-arch=rv64imafdcv --with-tune=rocket 'CFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d' 'CXXFLAGS_FOR_TARGET=-O2   -mcmodel=medany -march=rv64imafdcv -mabi=lp64d']
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 12.0.1 20220505 (prerelease) (GCC) ]
+        ignore line: [COMPILER_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/bin/]
+        ignore line: [LIBRARY_PATH=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/:/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/]
+        ignore line: [Reading specs from /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/libgomp.spec]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcmodel=medany' '-fopenmp' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'cmTC_8b45a' '-shared-libgcc' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-pthread' '-dumpdir' 'cmTC_8b45a.']
+        link line: [ /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/collect2 -plugin /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/liblto_plugin.so -plugin-opt=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccntqXYc.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-latomic -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl --eh-frame-hdr -melf64lriscv -dynamic-linker /lib/ld-musl-riscv64.so.1 -o cmTC_8b45a /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/crt1.o /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o -L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1 -L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc -L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc --push-state --as-needed -latomic --pop-state -lgcc_s -lgcc /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o /opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o]
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../libexec/gcc/riscv64-unknown-linux-musl/12.0.1/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccntqXYc.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-latomic] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--sysroot=/builds/canaan-creative/riscv-toolchain/install-native//riscv64-unknown-linux-musl] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-melf64lriscv] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib/ld-musl-riscv64.so.1] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_8b45a] ==> ignore
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/crt1.o] ==> obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/crt1.o]
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o] ==> obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o]
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o] ==> obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o]
+          arg [-L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1] ==> dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1]
+          arg [-L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc] ==> dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc]
+          arg [-L/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib] ==> dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib]
+          arg [CMakeFiles/cmTC_8b45a.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgomp] ==> lib [gomp]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lpthread] ==> lib [pthread]
+          arg [-lc] ==> lib [c]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-latomic] ==> lib [atomic]
+          arg [--pop-state] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o] ==> obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o]
+          arg [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o] ==> obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcmodel=medany' '-fopenmp' '-march=rv64imafdcv' '-mabi=lp64d' '-mcmodel=medany' '-v' '-o' 'cmTC_8b45a' '-shared-libgcc' '-mtune=rocket' '-misa-spec=20191213' '-march=rv64imafdcv_zicsr_zve32f_zve32x_zve64d_zve64f_zve64x_zvl128b_zvl32b_zvl64b' '-pthread' '-dumpdir' 'cmTC_8b45a.']
+        ignore line: [make[1]: Leaving directory '/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/CMakeFiles/CMakeScratch/TryCompile-wcVjba']
+        ignore line: []
+        ignore line: []
+        collapse obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib/crt1.o] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/lib/crt1.o]
+        collapse obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o]
+        collapse obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o]
+        collapse obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o]
+        collapse obj [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o]
+        collapse library dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1]
+        collapse library dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc]
+        collapse library dir [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/../lib/gcc/riscv64-unknown-linux-musl/12.0.1/../../../../riscv64-unknown-linux-musl/lib] ==> [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/lib]
+        implicit libs: [stdc++;m;gomp;gcc_s;gcc;pthread;c;atomic;gcc_s;gcc]
+        implicit objs: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/lib/crt1.o;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crti.o;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtbegin.o;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtend.o;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1/crtn.o]
+        implicit dirs: [/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc/riscv64-unknown-linux-musl/12.0.1;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/lib/gcc;/opt/toolchain/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/riscv64-unknown-linux-musl/lib]
+        implicit fwks: []
+      
+      
+...

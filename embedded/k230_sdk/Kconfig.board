@@ -1,0 +1,137 @@
+
+
+menu "board configuration"
+
+choice
+
+	prompt "reference board"
+        help
+          Select the reference board.
+
+config BOARD_K230_EVB
+	bool "K230 evb"
+
+config BOARD_K230_FPGA
+	bool "K230 fpga"
+
+config BOARD_K230D
+	bool "K230 sip"
+        help
+           "siplp4 128MB ddr";
+
+config BOARD_K230_CANMV
+	bool "K230 CANMV(K230PI)"
+        help
+           "CANMV(K230PI)";
+
+config BOARD_K230_CANMV_V2
+	bool "K230 CANMV(K230PI) V2"
+        help
+           "CANMV(K230PI) V2";
+
+config BOARD_K230D_CANMV
+	bool "K230D CANMV(K230PI zero)"
+        help
+           "CANMV(K230D PI zero)";
+
+config BOARD_K230_CANMV_01STUDIO
+       bool "K230 CANMV(01STUDIO)"
+        help
+           "CANMV(01STUDIO)";
+
+config BOARD_K230_CANMV_LCKFB
+	bool "K230 CANMV LCKFB"
+        help
+           "CANMV LCKFB";
+
+config BOARD_K230_CANMV_DONGSHANPI
+       bool "K230 CANMV(DONGSHANPI)"
+        help
+           "CANMV(DONGSHANPI)";
+
+config BOARD_K230_CANMV_RTT_EVB
+       bool "K230 CANMV(rtt evb)"
+        help
+           "CANMV(rtt evb)";
+
+config BOARD_K230D_CANMV_BPI
+       bool "K230 CANMV(BPI)"
+        help
+           "CANMV(k230d bpi)";
+endchoice
+
+
+config BOARD_NAME
+       string "define K230 reference board name"
+       #depends on BOARD_K230_EVB=y || BOARD_K230_FPGA=y
+       default "k230_evb"
+
+config QUICK_BOOT
+        bool "quick boot"
+        help
+              quick boot, not enter uboot cmd;
+        default y
+
+config GEN_SECURITY_IMG
+        bool "create security image "
+        help
+              create security image ;
+        default n
+
+config UBOOT_DEFCONFIG
+        string "uboot defconfig  "
+        help
+                uboot defconfig ;
+        default BOARD_NAME
+
+config LINUX_DEFCONFIG
+        string "linux defconfig  "
+        help
+                linux defconfig ;
+        default BOARD_NAME
+
+config LINUX_DTB
+        string "linux dtb name"
+        help
+                linux  dtb name ;
+        default BOARD_NAME
+
+config BUILDROOT_DEFCONFIG
+        string "buildroot defconfig  "
+        help
+                buildroot defconfig ;
+        default BOARD_NAME
+
+config RTTHREAD_DEFCONFIG
+        string "rtthread defconfig  "
+        help
+                rtthread defconfig ;
+
+config REMOTE_TEST_PLATFORM
+        bool "config REMOTE_TEST_PLATFORM"
+        help
+              xxxe ;
+        default n
+config GEN_IMG_SCRIPT
+        string "generate image scripte"
+        help
+              generate image scripte;
+       default "board/common/gen_image_script/gen_image.sh"
+config RTT_CONSOLE_ID
+        depends on SUPPORT_RTSMART
+	int "RTT console id"
+	default 3
+
+config SPI_NOR_SUPPORT_CFG_PARAM
+        bool "spi nor support cfg param"
+        depends on  SPI_NOR
+        help
+              spi nor support cfg param ;
+        default y
+
+config CANAAN_SITE_IMG_NAME_PREFIX
+        string "canaan site image name prefix"
+        default ""
+        help
+                canaan site image name prefix;
+endmenu

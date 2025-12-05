@@ -1,0 +1,1 @@
+/Users/spacefarers/code/RecycleVision/embedded/k230_sdk/src/big/nncase/k230_code/out/bin/main.elf

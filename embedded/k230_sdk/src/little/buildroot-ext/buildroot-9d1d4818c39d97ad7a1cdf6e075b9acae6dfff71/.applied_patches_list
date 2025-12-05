@@ -1,0 +1,17 @@
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0002-support-Remove-check-kernel-header-s-version.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0003-version.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0004-package-gdb-Support-riscv64.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0005-support-download-check-hash-Skip-hash-check.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0006-package-uclibc-Add-uclibc-support-for-csky.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0007-arch-riscv-add-v-xthead-extension.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0008-linux-Support-csky-uImage-zImage-Image.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0009-package-ntfs-3g-Don-t-use-ffs-builtin-from-gcc.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0010-fs-ext2-Change-default-ext2-size-to-300M.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0011-linux-linux.mk-Copy-Image-to-images.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0012-toolchain-fix-compiling-for-external-toolchain-with-.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0013-package-botan-Enable-botan-for-csky-cpu.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0014-boot-opensbi-Support-T-HEAD-C910.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0017-package-gcc-Update-GCC-9.0-to-10.0.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0018-boot-opensbi-Remove-trouble-patch.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0019-package-linux-headers-Add-linux-headers-in-host.patch
+/Volumes/Data/code/RecycleVision/embedded/k230_sdk/src/little/buildroot-ext/patches/0020-boot-opensbi-Update.patch

@@ -31,7 +31,7 @@ def image_inference(model, device, image_size, mean, std, class_names, images_pa
     ])
     # inference image
     if os.path.isfile(images_path):
-        ori_image = Image.open(images_path)
+        ori_image = Image.open(images_path).convert('RGB')
         input_tensor = transform(ori_image).unsqueeze(0).to(device)
         # inference
         with torch.no_grad():
@@ -48,7 +48,7 @@ def image_inference(model, device, image_size, mean, std, class_names, images_pa
             for filename in files:
                 if filename.lower().endswith((".jpg", ".jpeg", ".png")):
                     image_path = os.path.join(root, filename)
-                    ori_image = Image.open(image_path)
+                    ori_image = Image.open(image_path).convert('RGB')
                     input_tensor = transform(ori_image).unsqueeze(0).to(device)
                     with torch.no_grad():
                         outputs = model(input_tensor)
